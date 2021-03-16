@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "936190762763",
+    "project_id": "mychat-4dcf8",
+    "storage_bucket": "mychat-4dcf8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936190762763:android:0a051d9b834442512c8c0e",
+        "android_client_info": {
+          "package_name": "com.ludev.mychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936190762763-qt14vkvot29rjlphldbv12tvson8m71t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuiJHrPItx0k6vmZ5XpHg7bT0hGxRZJk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936190762763-qt14vkvot29rjlphldbv12tvson8m71t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
