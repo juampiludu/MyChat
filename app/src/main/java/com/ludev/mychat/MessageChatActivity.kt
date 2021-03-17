@@ -153,6 +153,7 @@ class MessageChatActivity : AppCompatActivity() {
         messageHashMap["url"] = ""
         messageHashMap["messageId"] = messageKey
         messageHashMap["time"] = calendar.time.toString()
+        messageHashMap["timeInMillis"] = System.currentTimeMillis()
         messageHashMap["showTime"] = currentTime
         reference.child("Chats")
             .child(messageKey!!)
@@ -293,6 +294,10 @@ class MessageChatActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val downloadUrl = task.result
                     val url = downloadUrl.toString()
+                    val calendar = Calendar.getInstance()
+                    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                    val minute = calendar.get(Calendar.MINUTE)
+                    val currentTime = String.format("%02d:%02d", hour, minute)
 
                     val messageHashMap = HashMap<String, Any?>()
                     messageHashMap["sender"] = firebaseUser!!.uid
@@ -301,8 +306,9 @@ class MessageChatActivity : AppCompatActivity() {
                     messageHashMap["seen"] = false
                     messageHashMap["url"] = url
                     messageHashMap["messageId"] = messageId
-                    messageHashMap["time"] = Calendar.getInstance().time.toString()
-                    messageHashMap["showTime"] = "${Calendar.HOUR_OF_DAY}:${Calendar.MINUTE}"
+                    messageHashMap["time"] = calendar.time.toString()
+                    messageHashMap["timeInMillis"] = System.currentTimeMillis()
+                    messageHashMap["showTime"] = currentTime
 
                     ref.child("Chats").child(messageId!!).setValue(messageHashMap)
                         .addOnCompleteListener { task ->

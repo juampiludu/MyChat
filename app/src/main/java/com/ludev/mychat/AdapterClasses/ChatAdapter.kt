@@ -19,6 +19,8 @@ import com.ludev.mychat.R
 import com.ludev.mychat.ViewFullImageActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.message_item_right.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChatAdapter(
     private val mContext: Context,
@@ -30,11 +32,19 @@ class ChatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
         return if (position == 1) {
-            val view: View = LayoutInflater.from(mContext).inflate(R.layout.message_item_right, parent, false)
+            val view: View = LayoutInflater.from(mContext).inflate(
+                R.layout.message_item_right,
+                parent,
+                false
+            )
             ViewHolder(view)
         }
         else {
-            val view: View = LayoutInflater.from(mContext).inflate(R.layout.message_item_left, parent, false)
+            val view: View = LayoutInflater.from(mContext).inflate(
+                R.layout.message_item_left,
+                parent,
+                false
+            )
             ViewHolder(view)
         }
 
@@ -55,7 +65,10 @@ class ChatAdapter(
 
                 holder.right_image_view!!.setOnLongClickListener {
 
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context, R.style.AlertDialogCustom)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(
+                        holder.itemView.context,
+                        R.style.AlertDialogCustom
+                    )
                     builder.setTitle("Delete image")
                     builder.setMessage("Are you sure to delete this image?")
                     builder.setPositiveButton("Delete") { _, _ ->
@@ -63,7 +76,7 @@ class ChatAdapter(
                         deleteSentMessage(position, holder)
 
                     }
-                    builder.setNegativeButton("Cancel") {_,_ ->}
+                    builder.setNegativeButton("Cancel") { _, _ ->}
                     builder.show()
 
                     return@setOnLongClickListener true
@@ -121,7 +134,10 @@ class ChatAdapter(
             if (firebaseUser.uid == chat.sender) {
 
                 holder.itemView.item_right_ln.setOnClickListener {
-                    val builder = MaterialAlertDialogBuilder(holder.itemView.context, R.style.AlertDialogCustom)
+                    val builder = MaterialAlertDialogBuilder(
+                        holder.itemView.context,
+                        R.style.AlertDialogCustom
+                    )
                     builder.setTitle("Delete message")
                     builder.setMessage("Are you sure to delete this message?")
                     builder.setPositiveButton("Delete") { _, _ ->
@@ -129,7 +145,7 @@ class ChatAdapter(
                         deleteSentMessage(position, holder)
 
                     }
-                    builder.setNegativeButton("Cancel") {_,_ ->}
+                    builder.setNegativeButton("Cancel") { _, _ ->}
                     builder.show()
                 }
 
@@ -164,6 +180,45 @@ class ChatAdapter(
             }*/
         }
 
+
+        // Date of messages
+
+        val m: Chat = mChatList[position]
+
+        var previousTs: Long = 0
+
+        if (position > 1) {
+            val pm: Chat = mChatList[position-1]
+            previousTs = pm.timeInMillis
+        }
+
+        val cal1 = Calendar.getInstance()
+        val cal2 = Calendar.getInstance()
+
+        cal1.timeInMillis = mChatList[position].timeInMillis
+        cal2.timeInMillis = previousTs * 1000
+
+        val sameDay: Boolean = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("MMMM d").format(calendar.time)
+
+        if (previousTs == 0L) {
+            holder.itemView.show_date_rl!!.visibility = View.VISIBLE
+            holder.show_date!!.text = dateFormat
+        }
+        else {
+            if (sameDay) {
+                holder.show_date!!.text = dateFormat
+                holder.itemView.show_date_rl!!.visibility = View.VISIBLE
+            }
+            else {
+                holder.show_date!!.text = ""
+                holder.itemView.show_date_rl!!.visibility = View.GONE
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -177,6 +232,7 @@ class ChatAdapter(
         var text_show_time: TextView? = itemView.findViewById(R.id.text_show_time)
         var right_image_view: ImageView? = itemView.findViewById(R.id.right_image_view)
         var icon_seen: ImageView? = itemView.findViewById(R.id.icon_seen)
+        var show_date: TextView? = itemView.findViewById(R.id.show_date)
 
     }
 
@@ -199,10 +255,18 @@ class ChatAdapter(
         ref.addOnCompleteListener { task ->
 
                 if (task.isSuccessful) {
-                    Toast.makeText(holder.itemView.context, "Message deleted successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "Message deleted successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 else {
-                    Toast.makeText(holder.itemView.context, "Error: ${task.exception.toString()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "Error: ${task.exception.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }

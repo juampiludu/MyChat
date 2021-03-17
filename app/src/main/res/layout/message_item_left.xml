@@ -1,74 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="295dp"
-    android:layout_height="wrap_content"
-    android:padding="9dp"
-    android:layout_margin="5dp">
-    
-    <RelativeLayout
-        android:id="@+id/item_left_rl"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/profile"
-            android:visibility="gone"/>
+    <RelativeLayout
+        android:id="@+id/show_date_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/item_left_ln"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:padding="5dp"
-            android:background="@drawable/background_left">
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/show_date_background">
 
             <TextView
-                android:id="@+id/show_text_message"
+                android:id="@+id/show_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="message here"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/background_left"/>
-
-            <ImageView
-                android:id="@+id/left_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="400dp"
-                android:background="@drawable/background_image_left"
-                android:layout_marginStart="6dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/text_show_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="21:10"
-                android:layout_marginEnd="5dp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_gravity="bottom"/>
-
-            <ImageView
-                android:id="@+id/icon_seen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sent"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="2dp"
-                android:visibility="gone"/>
+                android:text="Jan 1"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="295dp"
+        android:layout_height="wrap_content"
+        android:padding="9dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/show_date_rl">
+
+        <RelativeLayout
+            android:id="@+id/item_left_rl"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/profile"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/item_left_ln"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="5dp"
+                android:background="@drawable/background_left">
+
+                <TextView
+                    android:id="@+id/show_text_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="message here"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/background_left"/>
+
+                <ImageView
+                    android:id="@+id/left_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="400dp"
+                    android:background="@drawable/background_image_left"
+                    android:layout_marginStart="6dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/text_show_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21:10"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_gravity="bottom"/>
+
+                <ImageView
+                    android:id="@+id/icon_seen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="2dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
+
 
 
 </RelativeLayout>
