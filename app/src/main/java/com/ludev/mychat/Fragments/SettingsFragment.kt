@@ -71,16 +71,18 @@ class SettingsFragment : Fragment() {
 
                     val user: Users? = p0.getValue(Users::class.java)
 
-                    if (context != null) {
-                        view.username_settings.text = user!!.username
-                        view.set_email.text = user.email
-                        view.set_phone.text = user.phone
-                        editUsername = user.username
-                        editPhone = user.phone
-                        editFacebook = user.facebook
-                        editInstagram = user.instagram
-                        editTwitter = user.twitter
-                        Picasso.get().load(user.profile).into(view.profile_image_settings)
+                    activity?.let {
+                        if (context != null) {
+                            view.username_settings.text = user!!.username
+                            view.set_email.text = user.email
+                            view.set_phone.text = user.phone
+                            editUsername = user.username
+                            editPhone = user.phone
+                            editFacebook = user.facebook
+                            editInstagram = user.instagram
+                            editTwitter = user.twitter
+                            Picasso.get().load(user.profile).into(view.profile_image_settings)
+                        }
                     }
 
                 }

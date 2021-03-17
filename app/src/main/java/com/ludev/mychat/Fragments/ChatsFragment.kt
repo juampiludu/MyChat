@@ -51,14 +51,18 @@ class ChatsFragment : Fragment() {
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
 
-                (usersChatList as ArrayList).clear()
+                if (p0.exists()) {
 
-                for (dataSnapshot in p0.children) {
-                    val chatList = dataSnapshot.getValue(ChatList::class.java)
+                    (usersChatList as ArrayList).clear()
 
-                    (usersChatList as ArrayList).add(chatList!!)
+                    for (dataSnapshot in p0.children) {
+                        val chatList = dataSnapshot.getValue(ChatList::class.java)
+
+                        (usersChatList as ArrayList).add(chatList!!)
+                    }
+                    retrieveChatList()
+
                 }
-                retrieveChatList()
 
             }
 
@@ -84,19 +88,26 @@ class ChatsFragment : Fragment() {
         val ref = FirebaseGlobalValue().ref.child("Users")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
-                (mUsers as ArrayList).clear()
 
-                for (dataSnapshot in p0.children) {
-                    val user = dataSnapshot.getValue(Users::class.java)
+                if (p0.exists()) {
 
-                    for (eachChatList in usersChatList!!) {
-                        if (user!!.uid == eachChatList.id) {
-                            (mUsers as ArrayList).add(user)
+                    (mUsers as ArrayList).clear()
+
+                    for (dataSnapshot in p0.children) {
+                        val user = dataSnapshot.getValue(Users::class.java)
+
+                        for (eachChatList in usersChatList!!) {
+                            if (user!!.uid == eachChatList.id) {
+                                (mUsers as ArrayList).add(user)
+                            }
                         }
                     }
+                    activity?.let {
+                        userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
+                        recyclerViewChatList.adapter = userAdapter
+                    }
+
                 }
-                userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
-                recyclerViewChatList.adapter = userAdapter
             }
 
             override fun onCancelled(p0: DatabaseError) {

@@ -79,17 +79,25 @@ class SearchFragment : Fragment() {
         refUsers.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(p0: DataSnapshot) {
-                (mUsers as ArrayList<Users>).clear()
-                if (searchUsersEditText!!.text.isEmpty()) {
-                    for (snapshot in p0.children) {
-                        val user: Users? = snapshot.getValue(Users::class.java)
-                        if (user!!.uid != firebaseUserID) {
-                            (mUsers as ArrayList<Users>).add(user)
+
+                if (p0.exists()) {
+
+                    (mUsers as ArrayList<Users>).clear()
+                    if (searchUsersEditText!!.text.isEmpty()) {
+                        for (snapshot in p0.children) {
+                            val user: Users? = snapshot.getValue(Users::class.java)
+                            if (user!!.uid != firebaseUserID) {
+                                (mUsers as ArrayList<Users>).add(user)
+                            }
+                        }
+                        activity?.let {
+                            userAdapter = UserAdapter(context!!, mUsers!!, false)
+                            recyclerView!!.adapter = userAdapter
                         }
                     }
-                    userAdapter = UserAdapter(context!!, mUsers!!, false)
-                    recyclerView!!.adapter = userAdapter
+
                 }
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -113,15 +121,21 @@ class SearchFragment : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
 
-                (mUsers as ArrayList<Users>).clear()
-                for (snapshot in p0.children) {
-                    val user: Users? = snapshot.getValue(Users::class.java)
-                    if (user!!.uid != firebaseUserID) {
-                        (mUsers as ArrayList<Users>).add(user)
+                if (p0.exists()) {
+
+                    (mUsers as ArrayList<Users>).clear()
+                    for (snapshot in p0.children) {
+                        val user: Users? = snapshot.getValue(Users::class.java)
+                        if (user!!.uid != firebaseUserID) {
+                            (mUsers as ArrayList<Users>).add(user)
+                        }
                     }
+                    activity?.let {
+                        userAdapter = UserAdapter(context!!, mUsers!!, false)
+                        recyclerView!!.adapter = userAdapter
+                    }
+
                 }
-                userAdapter = UserAdapter(context!!, mUsers!!, false)
-                recyclerView!!.adapter = userAdapter
 
             }
 
