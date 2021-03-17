@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +32,8 @@ class UserAdapter(
     private val mUsers: List<Users>
     private var isChatCheck: Boolean
     private var lastMsg: String = ""
+    private var lastMsgUser: Boolean? = null
+    private var lastMsgSeen: Boolean? = null
 
     init {
         this.mContext = mContext
@@ -51,7 +54,7 @@ class UserAdapter(
 
         if (isChatCheck) {
             holder.lastMessageTxt!!.visibility = View.VISIBLE
-            retrieveLastMessage(user.uid, holder.lastMessageTxt!!)
+            retrieveLastMessage(user.uid, holder.lastMessageTxt!!, holder.iconSeen!!)
         }
         else {
             holder.lastMessageTxt!!.visibility = View.GONE
@@ -121,12 +124,15 @@ class UserAdapter(
         var onlineIcon: CircleImageView? = itemView.findViewById(R.id.image_online)
         var offlineIcon: CircleImageView? = itemView.findViewById(R.id.image_offline)
         var lastMessageTxt: TextView? = itemView.findViewById(R.id.message_last)
+        var iconSeen: ImageView? = itemView.findViewById(R.id.icon_seen)
 
     }
 
-    private fun retrieveLastMessage(chatUserId: String, lastMessageTxt: TextView) {
+    private fun retrieveLastMessage(chatUserId: String, lastMessageTxt: TextView, iconSeen: ImageView) {
 
         lastMsg = "default"
+        lastMsgUser = false
+        lastMsgSeen = false
 
         val firebaseUsers = FirebaseAuth.getInstance().currentUser
         val ref = FirebaseGlobalValue().ref.child("Chats")
@@ -144,6 +150,8 @@ class UserAdapter(
                             chat.sender == firebaseUsers.uid) {
 
                             lastMsg = chat.message
+                            lastMsgUser = chat.sender == firebaseUsers.uid
+                            lastMsgSeen = chat.seen
 
                         }
 
@@ -155,6 +163,19 @@ class UserAdapter(
                     else -> lastMessageTxt.text = lastMsg
                 }
                 lastMsg = "default"
+
+                when (lastMsgUser) {
+                    true -> iconSeen.visibility = View.VISIBLE
+                    false -> iconSeen.visibility = View.GONE
+                }
+                lastMsgUser = false
+
+                when (lastMsgSeen) {
+                    true -> iconSeen.setImageResource(R.drawable.ic_seen)
+                    false -> iconSeen.setImageResource(R.drawable.ic_sent)
+                }
+                lastMsgSeen = false
+
             }
 
             override fun onCancelled(p0: DatabaseError) {

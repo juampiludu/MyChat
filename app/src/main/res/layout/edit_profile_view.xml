@@ -88,7 +88,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/logo_facebook"
+            app:startIconDrawable="@drawable/ic_facebook"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:hint="Facebook username"
+                android:hint="Facebook"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -113,7 +113,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/logo_instagram"
+            app:startIconDrawable="@drawable/ic_instagram"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:hint="Instagram username"
+                android:hint="Instagram"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -138,7 +138,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/logo_twitter"
+            app:startIconDrawable="@drawable/ic_twitter"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
@@ -148,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:hint="Twitter username"
+                android:hint="Twitter"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"/>

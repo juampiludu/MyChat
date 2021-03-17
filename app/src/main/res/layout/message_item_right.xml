@@ -74,7 +74,6 @@
                     android:layout_height="400dp"
                     android:background="@drawable/background_image_right"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/cover"
                     android:visibility="gone"/>
 
                 <TextView

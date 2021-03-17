@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:foreground="@drawable/cv_user_search_ripple"
+        android:background="@drawable/cv_user_search_ripple"
         android:clickable="false"
         android:focusable="true">
 
@@ -69,14 +69,26 @@
                 android:visibility="gone">
             </de.hdodenhof.circleimageview.CircleImageView>
 
+            <ImageView
+                android:id="@+id/icon_seen"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_sent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_toRightOf="@+id/profile_image"
+                android:layout_below="@+id/username"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/message_last"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_toRightOf="@+id/profile_image"
+                android:layout_toRightOf="@+id/icon_seen"
                 android:layout_marginTop="4dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:textSize="16sp"
                 android:maxLines="1"
                 android:textColor="@android:color/darker_gray"

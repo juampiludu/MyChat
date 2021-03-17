@@ -76,6 +76,15 @@ class MessageChatActivity : AppCompatActivity() {
                 username_mchat.text = user!!.username
                 Picasso.get().load(user.profile).into(profile_image_mchat)
 
+                if (user.status == "online") {
+                    user_status.text = "online"
+                    user_status.setTextColor(resources.getColor(R.color.colorRed))
+                }
+                else {
+                    user_status.text = "offline"
+                    user_status.setTextColor(resources.getColor(android.R.color.darker_gray))
+                }
+
                 retrieveMessages(firebaseUser!!.uid, userIdVisit, user.profile)
 
             }
