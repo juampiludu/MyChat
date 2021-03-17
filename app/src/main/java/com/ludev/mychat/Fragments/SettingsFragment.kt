@@ -193,7 +193,8 @@ class SettingsFragment : Fragment() {
     private fun updateProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String) {
 
         val hashMap = HashMap<String, Any>()
-        hashMap["username"] = username.toLowerCase()
+        hashMap["username"] = username
+        hashMap["search"] = username.toLowerCase()
         hashMap["phone"] = phone
         hashMap["facebook"] = "https://www.facebook.com/$facebook"
         hashMap["instagram"] = "https://www.instagram.com/$instagram"

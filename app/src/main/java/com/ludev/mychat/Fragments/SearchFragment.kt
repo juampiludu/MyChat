@@ -46,10 +46,9 @@ class SearchFragment : Fragment() {
 
 
         mUsers = ArrayList()
-        retrieveAllUsers()
 
 
-        searchUsersEditText!!.addTextChangedListener(object : TextWatcher{
+        searchUsersEditText!!.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable?) {
 
@@ -71,43 +70,6 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    private fun retrieveAllUsers() {
-
-        val firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val refUsers = FirebaseGlobalValue().ref.child("Users")
-
-        refUsers.addValueEventListener(object : ValueEventListener{
-
-            override fun onDataChange(p0: DataSnapshot) {
-
-                if (p0.exists()) {
-
-                    (mUsers as ArrayList<Users>).clear()
-                    if (searchUsersEditText!!.text.isEmpty()) {
-                        for (snapshot in p0.children) {
-                            val user: Users? = snapshot.getValue(Users::class.java)
-                            if (user!!.uid != firebaseUserID) {
-                                (mUsers as ArrayList<Users>).add(user)
-                            }
-                        }
-                        activity?.let {
-                            userAdapter = UserAdapter(context!!, mUsers!!, false)
-                            recyclerView!!.adapter = userAdapter
-                        }
-                    }
-
-                }
-
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-        })
-
-    }
-
     private fun searchForUsers(str: String) {
 
         val firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid
@@ -117,7 +79,7 @@ class SearchFragment : Fragment() {
             .startAt(str)
             .endAt(str + "\uf8ff")
 
-        queryUsers.addValueEventListener(object : ValueEventListener{
+        queryUsers.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot) {
 
