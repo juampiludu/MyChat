@@ -88,7 +88,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/ic_person"
+            app:startIconDrawable="@drawable/logo_facebook"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
@@ -113,7 +113,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/ic_person"
+            app:startIconDrawable="@drawable/logo_instagram"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
@@ -138,7 +138,7 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
-            app:startIconDrawable="@drawable/ic_person"
+            app:startIconDrawable="@drawable/logo_twitter"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
 
