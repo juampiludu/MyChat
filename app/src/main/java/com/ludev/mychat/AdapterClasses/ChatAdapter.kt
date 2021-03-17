@@ -98,22 +98,6 @@ class ChatAdapter(
                 holder.left_image_view!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.url).into(holder.left_image_view)
 
-                /*holder.left_image_view!!.setOnLongClickListener {
-
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
-                    builder.setTitle("Delete Image")
-                    builder.setMessage("Are you sure to delete this image?")
-                    builder.setPositiveButton("Delete") { _, _ ->
-
-                        deleteSentMessage(position, holder)
-
-                    }
-                    builder.setNegativeButton("Cancel") {_,_ ->}
-                    builder.show()
-
-                    return@setOnLongClickListener true
-                }*/
-
                 holder.left_image_view!!.setOnClickListener {
 
                     val intent = Intent(mContext, ViewFullImageActivity::class.java)
@@ -161,9 +145,7 @@ class ChatAdapter(
             holder.icon_seen!!.visibility = View.VISIBLE
 
             /*if (chat.url != "" && chat.message == "sent you a photo.") {
-                val lp: LinearLayout.LayoutParams? = holder.icon_seen!!.layoutParams as LinearLayout.LayoutParams?
-                lp!!.setMargins(0, 0, -150, 0)
-                holder.icon_seen!!.layoutParams = lp
+
             }*/
 
             if (firebaseUser.uid == chat.receiver) {
@@ -180,43 +162,40 @@ class ChatAdapter(
             }*/
         }
 
-
-        // Date of messages
-
-        val m: Chat = mChatList[position]
-
-        var previousTs: Long = 0
-
-        if (position > 1) {
-            val pm: Chat = mChatList[position-1]
-            previousTs = pm.timeInMillis
-        }
-
-        val cal1 = Calendar.getInstance()
-        val cal2 = Calendar.getInstance()
-
-        cal1.timeInMillis = mChatList[position].timeInMillis
-        cal2.timeInMillis = previousTs * 1000
-
-        val sameDay: Boolean = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+        // Group messages by date
 
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("MMMM d").format(calendar.time)
+        val mess = mChatList[position]
+        calendar.timeInMillis = mess.timeInMillis
 
-        if (previousTs == 0L) {
-            holder.itemView.show_date_rl!!.visibility = View.VISIBLE
-            holder.show_date!!.text = dateFormat
-        }
-        else {
-            if (sameDay) {
-                holder.show_date!!.text = dateFormat
+        val msg = mChatList[position].timeInMillis
+        val dateFormat = SimpleDateFormat("MMMM d, yyyy").format(msg)
+
+        val date = calendar.get(Calendar.DAY_OF_MONTH)
+
+        if (position > 0) {
+
+            val previousMessage = mChatList[position-1]
+
+            calendar.timeInMillis = previousMessage.timeInMillis
+            val prevDate = calendar.get(Calendar.DAY_OF_MONTH)
+
+            if (date > prevDate) {
+                // This is a different day than the previous message, so show the Date
                 holder.itemView.show_date_rl!!.visibility = View.VISIBLE
+                holder.show_date!!.text = dateFormat
             }
             else {
-                holder.show_date!!.text = ""
+                // Same day, so hide the Date
                 holder.itemView.show_date_rl!!.visibility = View.GONE
+                holder.show_date!!.text = ""
             }
+
+        }
+        else {
+            // This is the first message, so show the date
+            holder.itemView.show_date_rl!!.visibility = View.VISIBLE
+            holder.show_date!!.text = dateFormat
         }
 
     }
