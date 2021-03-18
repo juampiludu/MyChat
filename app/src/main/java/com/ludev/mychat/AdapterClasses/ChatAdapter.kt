@@ -1,5 +1,7 @@
 package com.ludev.mychat.AdapterClasses
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -17,7 +19,9 @@ import com.ludev.mychat.ModelClasses.Chat
 import com.ludev.mychat.R
 import com.ludev.mychat.ViewFullImageActivity
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.message_item_left.view.*
 import kotlinx.android.synthetic.main.message_item_right.view.*
+import kotlinx.android.synthetic.main.message_item_right.view.show_date_rl
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +31,8 @@ class ChatAdapter(
 ) : RecyclerView.Adapter<ChatAdapter.ViewHolder?>() {
 
     private var firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+    private val URL_REGEX =
+        "^((https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$"
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
@@ -101,7 +107,7 @@ class ChatAdapter(
 
                     val intent = Intent(mContext, ViewFullImageActivity::class.java)
                     intent.putExtra("url", chat.url)
-                    intent.putExtra("user_id", chat.receiver)
+                    intent.putExtra("user_id", chat.sender)
                     mContext.startActivity(intent)
 
                 }
@@ -130,6 +136,43 @@ class ChatAdapter(
                     }
                     builder.setNegativeButton("Cancel") { _, _ ->}
                     builder.show()
+                }
+
+                // Copy text from TextView
+
+                if (chat.url == "" && chat.message != "sent you a photo.") {
+                    holder.itemView.item_right_ln.setOnLongClickListener {
+
+                        val text = holder.show_text_message!!.text.toString()
+                        val clip: ClipData = ClipData.newPlainText(text, text)
+                        val clipboard = mContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+                        clipboard.setPrimaryClip(clip)
+
+                        Toast.makeText(mContext, "Message copied to clipboard.", Toast.LENGTH_SHORT).show()
+
+                        return@setOnLongClickListener true
+
+                    }
+                }
+
+            }
+            else {
+
+                // Copy text from TextView
+
+                holder.itemView.item_left_ln.setOnLongClickListener {
+
+                    val text = holder.show_text_message!!.text.toString()
+                    val clip: ClipData = ClipData.newPlainText("text", text)
+                    val clipboard = mContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+                    clipboard.setPrimaryClip(clip)
+
+                    Toast.makeText(mContext, "Message copied to clipboard.", Toast.LENGTH_SHORT).show()
+
+                    return@setOnLongClickListener true
+
                 }
 
             }
@@ -174,7 +217,7 @@ class ChatAdapter(
 
         if (position > 0) {
 
-            val previousMessage = mChatList[position-1]
+            val previousMessage = mChatList[position - 1]
 
             calendar.timeInMillis = previousMessage.timeInMillis
             val prevDate = calendar.get(Calendar.DAY_OF_MONTH)

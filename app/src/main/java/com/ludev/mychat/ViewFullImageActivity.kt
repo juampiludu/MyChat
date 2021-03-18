@@ -71,12 +71,12 @@ class ViewFullImageActivity : AppCompatActivity() {
                     val username = user!!.username
 
                     full_image_user_txt.text = username
-                    /*if (currentUser.toString() == userId) {
+                    if (currentUser == userId) {
                         full_image_user_txt.text = "You"
                     }
                     else {
                         full_image_user_txt.text = username
-                    }*/
+                    }
 
                 }
 

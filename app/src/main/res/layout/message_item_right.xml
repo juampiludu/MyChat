@@ -65,6 +65,10 @@
                     android:textSize="18sp"
                     android:layout_marginEnd="5dp"
                     android:textColor="@android:color/white"
+                    android:autoLink="all"
+                    android:textColorHighlight="#99CD9494"
+                    android:textColorLink="#CD9494"
+                    android:linksClickable="true"
                     android:visibility="visible"/>
 
                 <ImageView
