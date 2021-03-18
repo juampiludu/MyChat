@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="#2E2C2A"
     tools:context=".MessageChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -76,13 +76,12 @@
         android:id="@+id/relative_layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/attach_image_file_btn"
-            style="@style/Widget.MaterialComponents.Button.Icon"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:cornerRadius="45dp"
@@ -95,11 +94,13 @@
             app:iconGravity="textStart"
             android:shadowColor="@android:color/transparent"
             app:icon="@drawable/ic_attach_file"
-            app:iconTint="#aaa"
-            app:rippleColor="@android:color/darker_gray"
+            app:iconTint="#555555"
+            app:rippleColor="#33555555"
             app:iconSize="30dp"
             android:rotation="-135"
-            android:layout_alignParentStart="true"/>
+            android:layout_marginStart="2dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/text_message"
@@ -112,12 +113,15 @@
             android:layout_toEndOf="@+id/attach_image_file_btn"
             android:layout_toStartOf="@+id/send_message_btn"
             android:layout_centerVertical="true"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="6"
+            android:minHeight="55dp"
             android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"/>
+            android:layout_marginRight="6dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/send_message_btn"
-            style="@style/Widget.MaterialComponents.Button.Icon"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:cornerRadius="45dp"
@@ -132,8 +136,10 @@
             app:icon="@drawable/ic_action_name"
             app:iconTint="@color/colorRed"
             app:iconSize="30dp"
-            app:rippleColor="@android:color/darker_gray"
+            app:rippleColor="@color/colorRippleButtons"
             android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="2dp"
             android:visibility="gone"/>
 
     </RelativeLayout>

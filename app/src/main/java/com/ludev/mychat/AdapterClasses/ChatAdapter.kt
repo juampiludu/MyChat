@@ -1,6 +1,5 @@
 package com.ludev.mychat.AdapterClasses
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -65,7 +64,7 @@ class ChatAdapter(
 
                 holder.right_image_view!!.setOnLongClickListener {
 
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(
+                    val builder = MaterialAlertDialogBuilder(
                         holder.itemView.context,
                         R.style.AlertDialogCustom
                     )

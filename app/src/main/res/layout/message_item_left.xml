@@ -8,7 +8,7 @@
         android:id="@+id/show_date_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:gravity="center_horizontal"
         android:visibility="gone">
 
@@ -31,15 +31,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="295dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:padding="9dp"
         android:layout_margin="5dp"
         android:layout_below="@id/show_date_rl">
 
         <RelativeLayout
             android:id="@+id/item_left_rl"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true">
 

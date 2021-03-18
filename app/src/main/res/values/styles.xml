@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorControlActivated">@color/colorRedLight</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -33,6 +35,10 @@
     <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="rippleColor">@color/colorRippleButtons</item>
         <item name="android:textColor">@color/colorRedLight</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="colorControlActivated">@color/colorRedLight</item>
     </style>
 
 </resources>

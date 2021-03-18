@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -142,6 +143,11 @@ class MessageChatActivity : AppCompatActivity() {
         }
 
         seenMessage(userIdVisit)
+
+        text_message.requestFocus()
+        if(text_message.requestFocus()) {
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
+        }
 
     }
 

@@ -42,7 +42,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_username"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -67,7 +67,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_phone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -94,7 +94,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_facebook"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -119,7 +119,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_instagram"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -144,7 +144,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_twitter"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"

@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@android:color/white"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textEmailAddress"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:textColor="@android:color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +94,7 @@
                 android:id="@+id/password_register"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
                 android:inputType="textPassword"
                 android:textColor="@android:color/white"/>
 
