@@ -16,6 +16,8 @@
         <activity android:name=".VisitUserProfileActivity" />
         <activity android:name=".ViewFullImageActivity" />
         <activity android:name=".MessageChatActivity" />
+        <activity android:name=".SearchActivity"/>
+        <activity android:name=".SettingsActivity"/>
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

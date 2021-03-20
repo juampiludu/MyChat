@@ -24,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.ludev.mychat.AdapterClasses.ChatAdapter
-import com.ludev.mychat.Fragments.ApiService
+import com.ludev.mychat.ApiService.ApiService
 import com.ludev.mychat.ModelClasses.Chat
 import com.ludev.mychat.ModelClasses.Users
 import com.ludev.mychat.Notifications.*

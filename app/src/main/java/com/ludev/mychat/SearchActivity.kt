@@ -1,13 +1,10 @@
-package com.ludev.mychat.Fragments
+package com.ludev.mychat
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -15,34 +12,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.ludev.mychat.AdapterClasses.UserAdapter
-import com.ludev.mychat.FirebaseGlobalValue
 import com.ludev.mychat.ModelClasses.Users
-import com.ludev.mychat.R
 import java.util.*
 import kotlin.collections.ArrayList
 
-/**
- * A simple [Fragment] subclass.
- */
-class SearchFragment : Fragment() {
+class SearchActivity : AppCompatActivity() {
 
     private var userAdapter: UserAdapter? = null
     private var mUsers: List<Users>? = null
     private var recyclerView: RecyclerView? = null
     private var searchUsersEditText: EditText? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_search, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_search)
+        setSupportActionBar(findViewById(R.id.search_toolbar))
 
-        recyclerView = view.findViewById(R.id.search_list)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        recyclerView = findViewById(R.id.search_list)
         recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(context)
+        recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        searchUsersEditText = view.findViewById(R.id.search_users_et)
+        searchUsersEditText = findViewById(R.id.search_users_et)
 
 
         mUsers = ArrayList()
@@ -55,9 +47,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(cs: CharSequence?, start: Int, before: Int, count: Int) {
-
-                searchForUsers(cs.toString().toLowerCase(Locale.ROOT))
-
+                searchForUsers(cs.toString().toLowerCase(Locale.ROOT), count)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -66,48 +56,51 @@ class SearchFragment : Fragment() {
 
         })
 
-
-        return view
     }
 
-    private fun searchForUsers(str: String) {
+    private fun searchForUsers(str: String, count: Int) {
 
         val firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val queryUsers = FirebaseGlobalValue().ref
             .child("Users")
             .orderByChild("search")
             .startAt(str)
-            .endAt(str + "\uf8ff")
 
-        queryUsers.addValueEventListener(object : ValueEventListener {
+        if (count > 0) {
 
-            override fun onDataChange(p0: DataSnapshot) {
+            queryUsers.addValueEventListener(object : ValueEventListener {
 
-                if (p0.exists()) {
+                override fun onDataChange(p0: DataSnapshot) {
 
-                    (mUsers as ArrayList<Users>).clear()
-                    for (snapshot in p0.children) {
-                        val user: Users? = snapshot.getValue(Users::class.java)
-                        if (user!!.uid != firebaseUserID) {
-                            (mUsers as ArrayList<Users>).add(user)
+                    if (p0.exists()) {
+
+                        (mUsers as ArrayList<Users>).clear()
+                        for (snapshot in p0.children) {
+                            val user: Users? = snapshot.getValue(Users::class.java)
+                            if (user!!.uid != firebaseUserID) {
+                                (mUsers as ArrayList<Users>).add(user)
+                            }
                         }
-                    }
-                    activity?.let {
-                        userAdapter = UserAdapter(context!!, mUsers!!, false)
+                        userAdapter = UserAdapter(this@SearchActivity, mUsers!!, false)
                         recyclerView!!.adapter = userAdapter
                         userAdapter!!.notifyDataSetChanged()
+
                     }
 
                 }
 
-            }
+                override fun onCancelled(p0: DatabaseError) {
 
-            override fun onCancelled(p0: DatabaseError) {
+                }
 
-            }
+            })
+        }
 
-        })
+    }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
 }

@@ -5,10 +5,10 @@ import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +36,7 @@ class VisitUserProfileActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 colorFilter = BlendModeColorFilter(Color.WHITE, BlendMode.SRC_IN)
             }else{
-                setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+                ForegroundColorSpan(Color.WHITE)
             }
         }
 

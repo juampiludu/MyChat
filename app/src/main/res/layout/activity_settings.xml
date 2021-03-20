@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SettingsActivity"
+    android:background="@color/colorPrimaryDark">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorProfile"
+        android:backgroundTint="@color/colorPrimary"
+        app:title="Settings"
+        android:padding="2dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settings_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:paddingBottom="40dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="405dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:background="@drawable/gradient_background"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="45dp"
+                        android:layout_gravity="center_horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_image_settings"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/profile"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/edit_profile_photo_btn"
+                            style="@style/Widget.MaterialComponents.Button.Icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:backgroundTint="@color/colorRedLight"
+                            app:cornerRadius="50dp"
+                            app:icon="@drawable/ic_add_photo"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            app:iconTint="@color/colorAccent"
+                            android:layout_marginTop="100dp"
+                            android:layout_marginStart="100dp"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/username_settings"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="username"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        android:textSize="21sp"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="290dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <in.championswimmer.libsocialbuttons.FabSocial
+                                android:id="@+id/set_facebook"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                app:social="facebook"
+                                android:tintMode="@color/colorAccent"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <in.championswimmer.libsocialbuttons.FabSocial
+                                android:id="@+id/set_instagram"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                app:social="instagram"
+                                android:tintMode="@color/colorAccent"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <in.championswimmer.libsocialbuttons.FabSocial
+                                android:id="@+id/set_twitter"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                app:social="twitter"
+                                android:tintMode="@color/colorAccent"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="45dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="50dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_email"/>
+
+                    <TextView
+                        android:id="@+id/set_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:text="example@gmail.com"
+                        android:textColor="@color/colorAccent"
+                        android:layout_gravity="center_vertical"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="50dp"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_phone"/>
+
+                    <TextView
+                        android:id="@+id/set_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:text="+12 3456 7890"
+                        android:textColor="@color/colorAccent"
+                        android:layout_gravity="center_vertical"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/edit_profile_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorRedLight"
+                app:rippleColor="@color/colorRippleButtons"
+                app:cornerRadius="10dp"
+                android:height="60dp"
+                app:strokeColor="@color/colorRedLight"
+                android:text="Edit Profile"
+                android:layout_marginTop="35dp"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="@color/colorRedLight"
+                app:iconPadding="10dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingStart="45dp"
+                android:paddingEnd="45dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

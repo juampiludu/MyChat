@@ -2,12 +2,13 @@ package com.ludev.mychat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,18 +16,22 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.ludev.mychat.Fragments.ChatsFragment
-import com.ludev.mychat.Fragments.SearchFragment
-import com.ludev.mychat.Fragments.SettingsFragment
+import com.google.firebase.iid.FirebaseInstanceId
+import com.ludev.mychat.AdapterClasses.UserAdapter
 import com.ludev.mychat.ModelClasses.Chat
+import com.ludev.mychat.ModelClasses.ChatList
 import com.ludev.mychat.ModelClasses.Users
-import com.squareup.picasso.Picasso
+import com.ludev.mychat.Notifications.Token
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var refUsers: DatabaseReference? = null
-    var firebaseUser: FirebaseUser? = null
+    private var refUsers: DatabaseReference? = null
+    private var firebaseUser: FirebaseUser? = null
+    private var userAdapter: UserAdapter? = null
+    private var mUsers: List<Users>? = null
+    private var usersChatList: List<ChatList>? = null
+    private lateinit var recyclerViewChatList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +40,19 @@ class MainActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         refUsers = FirebaseGlobalValue().ref.child("Users").child(firebaseUser!!.uid)
+        recyclerViewChatList = recycler_view_chat_list
+        recyclerViewChatList.setHasFixedSize(true)
+        recyclerViewChatList.layoutManager = LinearLayoutManager(this)
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        usersChatList = ArrayList()
 
         supportActionBar!!.title = ""
 
         val ref = FirebaseGlobalValue().ref.child("Chats")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
-                val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
                 var countUnreadMessages = 0
 
                 for (dataSnapshot in p0.children) {
@@ -53,45 +64,41 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                if (countUnreadMessages == 0) {
-                    viewPagerAdapter.addFragment(ChatsFragment(), "Chats")
-                }
-                else {
-                    viewPagerAdapter.addFragment(ChatsFragment(), "Chats ($countUnreadMessages)")
-                }
-
-                viewPagerAdapter.addFragment(SearchFragment(), "Search")
-                viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
-
-                view_pager.adapter = viewPagerAdapter
-                tab_layout.setupWithViewPager(view_pager)
-
             }
 
             override fun onCancelled(p0: DatabaseError) {
-
+                Toast.makeText(this@MainActivity, "Error: ${p0.toException()}", Toast.LENGTH_LONG).show()
+                Log.e("Error MainActivity ref", p0.message)
             }
         })
 
-        // display username and picture
-
-        refUsers!!.addValueEventListener(object : ValueEventListener {
+        val ref2 = FirebaseGlobalValue().ref.child("ChatList").child(firebaseUser!!.uid)
+        ref2.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
+
                 if (p0.exists()) {
 
-                    val user: Users? = p0.getValue(Users::class.java)
+                    (usersChatList as ArrayList).clear()
 
-                    user_name.text = user!!.username
-                    Picasso.get().load(user.profile).placeholder(R.drawable.profile).into(profile_image)
+                    for (dataSnapshot in p0.children) {
+                        val chatList = dataSnapshot.getValue(ChatList::class.java)
+
+                        (usersChatList as ArrayList).add(chatList!!)
+                    }
+                    retrieveChatList()
 
                 }
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
-
+                Toast.makeText(this@MainActivity, "Error: ${p0.toException()}", Toast.LENGTH_LONG).show()
+                Log.e("Error MainActivity ref", p0.message)
             }
 
         })
+
+        updateToken(FirebaseInstanceId.getInstance().token)
 
     }
 
@@ -127,38 +134,22 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.action_search -> {
 
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+
+                return true
+
             }
             R.id.action_settings -> {
+
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+
+                return true
 
             }
         }
         return false
-    }
-
-    internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
-        FragmentPagerAdapter(fragmentManager) {
-
-        private val fragments: ArrayList<Fragment> = ArrayList()
-        private val titles: ArrayList<String> = ArrayList()
-
-        override fun getCount(): Int {
-            return fragments.size
-        }
-
-        override fun getItem(position: Int): Fragment {
-            return fragments[position]
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            fragments.add(fragment)
-            titles.add(title)
-            notifyDataSetChanged()
-        }
-
-        override fun getPageTitle(i: Int): CharSequence? {
-            return titles[i]
-        }
-
     }
 
     private fun updateStatus(status: String) {
@@ -181,6 +172,48 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
 
         updateStatus("offline")
+    }
+
+    private fun updateToken(token: String?) {
+        val ref = FirebaseGlobalValue().ref.child("Tokens")
+        val token1 = Token(token!!)
+        ref.child(firebaseUser!!.uid).setValue(token1)
+    }
+
+    private fun retrieveChatList() {
+
+        mUsers = ArrayList()
+
+        val ref = FirebaseGlobalValue().ref.child("Users")
+        ref.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if (p0.exists()) {
+
+                    (mUsers as ArrayList).clear()
+
+                    for (dataSnapshot in p0.children) {
+                        val user = dataSnapshot.getValue(Users::class.java)
+
+                        for (eachChatList in usersChatList!!) {
+                            if (user!!.uid == eachChatList.id) {
+                                (mUsers as ArrayList).add(user)
+                            }
+                        }
+                    }
+
+                    userAdapter = UserAdapter(this@MainActivity, (mUsers as ArrayList<Users>), true)
+                    recyclerViewChatList.adapter = userAdapter
+                    userAdapter!!.notifyDataSetChanged()
+
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+
     }
 
 }

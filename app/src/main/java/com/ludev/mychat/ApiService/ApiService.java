@@ -1,4 +1,4 @@
-package com.ludev.mychat.Fragments;
+package com.ludev.mychat.ApiService;
 
 import com.ludev.mychat.Notifications.MyResponse;
 import com.ludev.mychat.Notifications.Sender;

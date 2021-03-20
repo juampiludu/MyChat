@@ -1,6 +1,5 @@
-package com.ludev.mychat.Fragments
+package com.ludev.mychat
 
-import `in`.championswimmer.libsocialbuttons.FabSocial
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -9,11 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,16 +25,13 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import com.ludev.mychat.FirebaseGlobalValue
 import com.ludev.mychat.ModelClasses.Users
-import com.ludev.mychat.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_settings.view.*
+import kotlinx.android.synthetic.main.activity_settings.*
+import java.util.*
+import kotlin.collections.HashMap
 
-/**
- * A simple [Fragment] subclass.
- */
-class SettingsFragment : Fragment() {
+class SettingsActivity : AppCompatActivity() {
 
     private var usersReference: DatabaseReference? = null
     private var firebaseUser: FirebaseUser? = null
@@ -50,12 +44,12 @@ class SettingsFragment : Fragment() {
     private var editInstagram: String = ""
     private var editTwitter: String = ""
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_settings, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        setSupportActionBar(findViewById(R.id.settings_toolbar))
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         usersReference = FirebaseGlobalValue().ref.child(
@@ -71,19 +65,15 @@ class SettingsFragment : Fragment() {
 
                     val user: Users? = p0.getValue(Users::class.java)
 
-                    activity?.let {
-                        if (context != null) {
-                            view.username_settings.text = user!!.username
-                            view.set_email.text = user.email
-                            view.set_phone.text = user.phone
-                            editUsername = user.username
-                            editPhone = user.phone
-                            editFacebook = user.facebook
-                            editInstagram = user.instagram
-                            editTwitter = user.twitter
-                            Picasso.get().load(user.profile).into(view.profile_image_settings)
-                        }
-                    }
+                    username_settings.text = user!!.username
+                    set_email.text = user.email
+                    set_phone.text = user.phone
+                    editUsername = user.username
+                    editPhone = user.phone
+                    editFacebook = user.facebook
+                    editInstagram = user.instagram
+                    editTwitter = user.twitter
+                    Picasso.get().load(user.profile).into(profile_image_settings)
 
                 }
 
@@ -95,19 +85,24 @@ class SettingsFragment : Fragment() {
 
         })
 
-        view.edit_profile_photo_btn.setOnClickListener {
+        edit_profile_photo_btn.setOnClickListener {
             pickImage()
         }
 
-        socialMedia(view.set_facebook, editFacebook)
-        socialMedia(view.set_instagram, editInstagram)
-        socialMedia(view.set_twitter, editTwitter)
+        set_facebook.setOnClickListener {
+            socialMedia(editFacebook)
+        }
+        set_instagram.setOnClickListener {
+            socialMedia(editInstagram)
+        }
+        set_twitter.setOnClickListener {
+            socialMedia(editTwitter)
+        }
 
-        view.edit_profile_btn.setOnClickListener {
+        edit_profile_btn.setOnClickListener {
             editProfile(editUsername, editPhone, editFacebook, editInstagram, editTwitter)
         }
 
-        return view
     }
 
     private fun editProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String) {
@@ -194,7 +189,7 @@ class SettingsFragment : Fragment() {
 
         val hashMap = HashMap<String, Any>()
         hashMap["username"] = username
-        hashMap["search"] = username.toLowerCase()
+        hashMap["search"] = username.toLowerCase(Locale.ROOT)
         hashMap["phone"] = phone
         hashMap["facebook"] = "https://www.facebook.com/$facebook"
         hashMap["instagram"] = "https://www.instagram.com/$instagram"
@@ -202,7 +197,7 @@ class SettingsFragment : Fragment() {
 
         usersReference!!.updateChildren(hashMap).addOnCompleteListener {
             if (it.isSuccessful) {
-                Toast.makeText(context, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -223,7 +218,7 @@ class SettingsFragment : Fragment() {
         if (requestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) {
 
             imageUri = data.data
-            Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Uploading...", Toast.LENGTH_LONG).show()
             uploadImageToDatabase()
 
         }
@@ -232,7 +227,7 @@ class SettingsFragment : Fragment() {
 
     private fun uploadImageToDatabase() {
 
-        val progressBar = ProgressDialog(context)
+        val progressBar = ProgressDialog(this)
         progressBar.setMessage("Image is uploading, please wait...")
         progressBar.show()
 
@@ -268,28 +263,31 @@ class SettingsFragment : Fragment() {
 
     }
 
-    private fun socialMedia(buttonDisplay: FabSocial, socialMedia: String) {
+    private fun socialMedia(socialMedia: String) {
 
-        buttonDisplay.setOnClickListener {
+        Log.i("URL", socialMedia)
 
-            if (socialMedia == "" ||
-                socialMedia == "https://www.facebook.com/" ||
-                socialMedia == "https://www.instagram.com/" ||
-                socialMedia == "https://www.twitter.com/"
-            ) {
-                Toast.makeText(context, "You have not added this social media. Add it by clicking \"Edit profile\" button.", Toast.LENGTH_LONG).show()
-            }
-            else {
+        if (socialMedia == "" ||
+            socialMedia == "https://www.facebook.com/" ||
+            socialMedia == "https://www.instagram.com/" ||
+            socialMedia == "https://www.twitter.com/"
+        ) {
+            Toast.makeText(this, "You have not added this social media. Add it by clicking \"Edit profile\" button.", Toast.LENGTH_LONG).show()
+        }
+        else {
 
-                val uri = Uri.parse(socialMedia)
+            val uri = Uri.parse(socialMedia)
 
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-
-            }
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
 
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
 }
