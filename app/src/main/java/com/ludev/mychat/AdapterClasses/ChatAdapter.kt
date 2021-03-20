@@ -31,8 +31,6 @@ class ChatAdapter(
 ) : RecyclerView.Adapter<ChatAdapter.ViewHolder?>() {
 
     private var firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-    private val URL_REGEX =
-        "^((https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$"
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
@@ -58,6 +56,7 @@ class ChatAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val chat: Chat = mChatList[position]
+        holder.setIsRecyclable(false)
 
         // images messages
         if (chat.url != "" && chat.message == "sent you a photo.") {
@@ -266,6 +265,10 @@ class ChatAdapter(
             0
         }
 
+    }
+
+    override fun getItemId(position: Int): Long {
+        return mChatList[position].messageId.toLong()
     }
 
     private fun deleteSentMessage(position: Int, holder: ChatAdapter.ViewHolder) {

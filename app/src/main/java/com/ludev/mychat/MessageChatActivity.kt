@@ -381,6 +381,7 @@ class MessageChatActivity : AppCompatActivity() {
                         (mChatList as ArrayList<Chat>)
                     )
                     recyclerViewChats.adapter = chatAdapter
+                    chatAdapter!!.notifyDataSetChanged()
 
                 }
             }

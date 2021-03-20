@@ -95,6 +95,7 @@ class SearchFragment : Fragment() {
                     activity?.let {
                         userAdapter = UserAdapter(context!!, mUsers!!, false)
                         recyclerView!!.adapter = userAdapter
+                        userAdapter!!.notifyDataSetChanged()
                     }
 
                 }

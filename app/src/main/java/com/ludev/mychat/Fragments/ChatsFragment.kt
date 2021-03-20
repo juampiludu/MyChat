@@ -105,6 +105,7 @@ class ChatsFragment : Fragment() {
                     activity?.let {
                         userAdapter = UserAdapter(context!!, (mUsers as ArrayList<Users>), true)
                         recyclerViewChatList.adapter = userAdapter
+                        userAdapter!!.notifyDataSetChanged()
                     }
 
                 }

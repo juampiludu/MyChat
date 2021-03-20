@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -106,14 +107,29 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_logout -> {
-                FirebaseAuth.getInstance().signOut()
 
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
+                val builder = MaterialAlertDialogBuilder(this, R.style.AlertDialogCustom)
+
+                builder.setTitle("Are you sure to logout from this account?")
+                builder.setPositiveButton("Logout") {_,_ ->
+
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(this, WelcomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+
+                }
+                builder.setNegativeButton("Cancel") {_,_ ->}
+                builder.show()
 
                 return true
+            }
+            R.id.action_search -> {
+
+            }
+            R.id.action_settings -> {
+
             }
         }
         return false
