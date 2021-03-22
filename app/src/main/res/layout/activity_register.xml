@@ -57,6 +57,29 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Name"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray"
+            app:hintTextColor="@android:color/darker_gray"
+            app:hintAnimationEnabled="true"
+            android:background="@color/colorPrimary"
+            app:startIconDrawable="@drawable/ic_person_outline"
+            app:startIconTint="@color/colorAccent"
+            app:boxStrokeColor="?attr/colorAccent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_register"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/white"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Email"
             android:layout_marginTop="10dp"
             android:textColorHint="@android:color/darker_gray"

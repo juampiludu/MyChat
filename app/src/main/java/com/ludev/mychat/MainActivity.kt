@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                     if (chat!!.receiver == firebaseUser!!.uid && !chat.seen) {
 
                         countUnreadMessages += 1
+                        Log.i("Chat", "${chat.sender}: $countUnreadMessages")
 
                     }
                 }

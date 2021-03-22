@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:background="@drawable/cv_user_search_ripple"
+        android:foreground="@drawable/cv_user_search_ripple"
         android:clickable="false"
         android:focusable="true">
 
@@ -86,14 +86,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_toRightOf="@+id/icon_seen"
+                android:layout_toEndOf="@+id/icon_seen"
+                android:layout_toStartOf="@id/last_message_time"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="6dp"
                 android:textSize="16sp"
                 android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="10dp"
                 />
+
+            <TextView
+                android:id="@+id/last_message_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/unread_messages_rl"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/unread_messages_background"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/last_message_time">
+
+                <TextView
+                    android:id="@+id/unread_messages_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

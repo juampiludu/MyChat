@@ -49,15 +49,14 @@ class UserAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val user: Users = mUsers[position]
-        holder.userNameTxt!!.text = user.username
+        holder.userNameTxt!!.text = user.name
         Picasso.get().load(user.profile).placeholder(R.drawable.profile).into(holder.profileImageView)
 
         if (isChatCheck) {
-            holder.lastMessageTxt!!.visibility = View.VISIBLE
             retrieveLastMessage(user.uid, holder.lastMessageTxt!!, holder.iconSeen!!)
         }
         else {
-            holder.lastMessageTxt!!.visibility = View.GONE
+            holder.lastMessageTxt!!.text = "@" + user.username
         }
 
         if (isChatCheck) {

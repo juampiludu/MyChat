@@ -1,5 +1,6 @@
 package com.ludev.mychat
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -43,6 +44,7 @@ class SettingsActivity : AppCompatActivity() {
     private var editFacebook: String = ""
     private var editInstagram: String = ""
     private var editTwitter: String = ""
+    private var editName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +67,8 @@ class SettingsActivity : AppCompatActivity() {
 
                     val user: Users? = p0.getValue(Users::class.java)
 
-                    username_settings.text = user!!.username
+                    name_settings.text = user!!.name
+                    set_username.text = "@" + user.username
                     set_email.text = user.email
                     set_phone.text = user.phone
                     editUsername = user.username
@@ -73,6 +76,7 @@ class SettingsActivity : AppCompatActivity() {
                     editFacebook = user.facebook
                     editInstagram = user.instagram
                     editTwitter = user.twitter
+                    editName = user.name
                     Picasso.get().load(user.profile).into(profile_image_settings)
 
                 }
@@ -100,12 +104,12 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         edit_profile_btn.setOnClickListener {
-            editProfile(editUsername, editPhone, editFacebook, editInstagram, editTwitter)
+            editProfile(editUsername, editPhone, editFacebook, editInstagram, editTwitter, editName)
         }
 
     }
 
-    private fun editProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String) {
+    private fun editProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String, name: String) {
 
         val inflater = layoutInflater
 
@@ -116,12 +120,14 @@ class SettingsActivity : AppCompatActivity() {
         val editTextFacebook: TextInputEditText = inflateView.findViewById(R.id.edit_facebook)
         val editTextInstagram: TextInputEditText = inflateView.findViewById(R.id.edit_instagram)
         val editTextTwitter: TextInputEditText = inflateView.findViewById(R.id.edit_twitter)
+        val editTextName: TextInputEditText = inflateView.findViewById(R.id.edit_name)
 
         editTextUsername.setText(username)
         editTextPhone.setText(phone)
         editTextFacebook.setText(facebook)
         editTextInstagram.setText(instagram)
         editTextTwitter.setText(twitter)
+        editTextName.setText(name)
 
         editTextFacebook.text!!.delete(0,25)
         editTextInstagram.text!!.delete(0,26)
@@ -142,7 +148,8 @@ class SettingsActivity : AppCompatActivity() {
                     editTextPhone.text.toString(),
                     editTextFacebook.text.toString(),
                     editTextInstagram.text.toString(),
-                    editTextTwitter.text.toString()
+                    editTextTwitter.text.toString(),
+                    editTextName.text.toString()
                 )
             }
 
@@ -182,10 +189,39 @@ class SettingsActivity : AppCompatActivity() {
             }
         })
 
+        editTextName.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (editTextName.text.isNullOrEmpty()) {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorPrimary))
+                }
+                else {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorRedLight))
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
 
     }
 
-    private fun updateProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String) {
+    private fun updateProfile(username: String, phone: String, facebook: String, instagram: String, twitter: String, name: String) {
 
         val hashMap = HashMap<String, Any>()
         hashMap["username"] = username
@@ -194,6 +230,7 @@ class SettingsActivity : AppCompatActivity() {
         hashMap["facebook"] = "https://www.facebook.com/$facebook"
         hashMap["instagram"] = "https://www.instagram.com/$instagram"
         hashMap["twitter"] = "https://www.twitter.com/$twitter"
+        hashMap["name"] = name.capitalizeWords()
 
         usersReference!!.updateChildren(hashMap).addOnCompleteListener {
             if (it.isSuccessful) {
@@ -289,5 +326,9 @@ class SettingsActivity : AppCompatActivity() {
         finish()
         return true
     }
+
+    @SuppressLint("DefaultLocale")
+    private fun String.capitalizeWords(): String =
+        split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
 
 }

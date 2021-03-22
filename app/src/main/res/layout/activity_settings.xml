@@ -72,11 +72,11 @@
                     </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/username_settings"
+                        android:id="@+id/name_settings"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="username"
+                        android:text="John Doe"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold"
                         android:textSize="21sp"
@@ -163,6 +163,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="50dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_person"
+                        app:tint="@color/colorRedLight" />
+
+                    <TextView
+                        android:id="@+id/set_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:text="john_doe"
+                        android:textColor="@color/colorAccent"
+                        android:layout_gravity="center_vertical"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="50dp"
+                    android:layout_marginTop="25dp"
                     android:orientation="horizontal">
 
                     <ImageView

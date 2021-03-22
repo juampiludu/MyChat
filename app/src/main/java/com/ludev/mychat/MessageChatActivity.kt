@@ -74,7 +74,7 @@ class MessageChatActivity : AppCompatActivity() {
 
                 val user: Users? = p0.getValue(Users::class.java)
 
-                username_mchat.text = user!!.username
+                username_mchat.text = user!!.name
                 Picasso.get().load(user.profile).into(profile_image_mchat)
 
                 if (user.status == "online") {
@@ -203,6 +203,7 @@ class MessageChatActivity : AppCompatActivity() {
                     })
 
                 }
+
             }
 
         // implement push notifications
@@ -214,7 +215,7 @@ class MessageChatActivity : AppCompatActivity() {
 
                 val user = p0.getValue(Users::class.java)
                 if (notify) {
-                    sendNotification(receiverId, user!!.username, message)
+                    sendNotification(receiverId, user!!.name, message)
                 }
                 notify = false
 
@@ -227,7 +228,7 @@ class MessageChatActivity : AppCompatActivity() {
 
     }
 
-    private fun sendNotification(receiverId: String?, username: String, message: String) {
+    private fun sendNotification(receiverId: String?, name: String, message: String) {
 
         val ref = FirebaseGlobalValue().ref
             .child("Tokens")
@@ -240,7 +241,7 @@ class MessageChatActivity : AppCompatActivity() {
                 for (dataSnapshot in p0.children) {
                     val token: Token? = dataSnapshot.getValue(Token::class.java)
 
-                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_launcher, "$username: $message", "New Message", userIdVisit)
+                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_launcher, message, name, userIdVisit)
 
                     val sender = Sender(data, token!!.token)
 
@@ -340,7 +341,7 @@ class MessageChatActivity : AppCompatActivity() {
 
                                         val user = p0.getValue(Users::class.java)
                                         if (notify) {
-                                            sendNotification(userIdVisit, user!!.username, "sent you a photo.")
+                                            sendNotification(userIdVisit, user!!.name, "sent you a photo.")
                                         }
                                         notify = false
 

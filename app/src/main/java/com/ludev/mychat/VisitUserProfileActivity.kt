@@ -50,7 +50,8 @@ class VisitUserProfileActivity : AppCompatActivity() {
 
                     user = p0.getValue(Users::class.java)
 
-                    username_display.text = user!!.username
+                    username_display.text = "@" + user!!.username
+                    name_display.text = user!!.name
                     Picasso.get().load(user!!.profile).into(profile_display)
                     email_display.text = user!!.email
 

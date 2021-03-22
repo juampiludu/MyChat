@@ -10,10 +10,11 @@ data class Users(
     var search: String,
     var facebook: String,
     var instagram: String,
-    var twitter: String
+    var twitter: String,
+    var name: String,
     ) {
 
-    constructor() : this("", "", "", "", "", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", "", "", "", "", "")
 
 }
 

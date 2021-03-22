@@ -61,6 +61,32 @@
             app:hintTextColor="@android:color/darker_gray"
             app:hintAnimationEnabled="true"
             android:background="@color/colorPrimary"
+            app:startIconDrawable="@drawable/ic_person_outline"
+            app:startIconTint="@color/colorAccent"
+            app:boxStrokeColor="?attr/colorAccent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:hint="Name"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textColorHint="@android:color/darker_gray"
+            app:hintTextColor="@android:color/darker_gray"
+            app:hintAnimationEnabled="true"
+            android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_phone"
             app:startIconTint="@color/colorAccent"
             app:boxStrokeColor="?attr/colorAccent">
