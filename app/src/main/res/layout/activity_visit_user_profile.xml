@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorProfile"
-        app:title="Profile"
+        app:title="@string/profile"
         android:backgroundTint="@color/colorPrimary"
         app:titleTextColor="@android:color/white"
         app:navigationIcon="?attr/homeAsUpIndicator"/>
@@ -221,7 +221,7 @@
                 app:cornerRadius="10dp"
                 android:height="60dp"
                 app:strokeColor="@color/colorRedLight"
-                android:text="Send Message"
+                android:text="@string/send_message"
                 android:layout_marginTop="35dp"
                 app:icon="@drawable/ic_message"
                 app:iconTint="@color/colorRedLight"

@@ -73,14 +73,14 @@ class ChatAdapter(
                         holder.itemView.context,
                         R.style.AlertDialogCustom
                     )
-                    builder.setTitle("Delete image")
-                    builder.setMessage("Are you sure to delete this image?")
-                    builder.setPositiveButton("Delete") { _, _ ->
+                    builder.setTitle(mContext.resources.getString(R.string.delete_image))
+                    builder.setMessage(mContext.resources.getString(R.string.delete_image_msg))
+                    builder.setPositiveButton(mContext.resources.getString(R.string.delete)) { _, _ ->
 
                         deleteSentMessage(position, holder)
 
                     }
-                    builder.setNegativeButton("Cancel") { _, _ ->}
+                    builder.setNegativeButton(mContext.resources.getString(R.string.cancel)) { _, _ ->}
                     builder.show()
 
                     return@setOnLongClickListener true
@@ -126,14 +126,14 @@ class ChatAdapter(
                         holder.itemView.context,
                         R.style.AlertDialogCustom
                     )
-                    builder.setTitle("Delete message")
-                    builder.setMessage("Are you sure to delete this message?")
-                    builder.setPositiveButton("Delete") { _, _ ->
+                    builder.setTitle(mContext.resources.getString(R.string.delete_message))
+                    builder.setMessage(mContext.resources.getString(R.string.delete_message_msg))
+                    builder.setPositiveButton(mContext.resources.getString(R.string.delete)) { _, _ ->
 
                         deleteSentMessage(position, holder)
 
                     }
-                    builder.setNegativeButton("Cancel") { _, _ ->}
+                    builder.setNegativeButton(mContext.resources.getString(R.string.cancel)) { _, _ ->}
                     builder.show()
                 }
 
@@ -148,7 +148,7 @@ class ChatAdapter(
 
                         clipboard.setPrimaryClip(clip)
 
-                        Toast.makeText(mContext, "Message copied to clipboard.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, mContext.resources.getString(R.string.clipboard), Toast.LENGTH_SHORT).show()
 
                         return@setOnLongClickListener true
 
@@ -168,7 +168,7 @@ class ChatAdapter(
 
                     clipboard.setPrimaryClip(clip)
 
-                    Toast.makeText(mContext, "Message copied to clipboard.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, mContext.resources.getString(R.string.clipboard), Toast.LENGTH_SHORT).show()
 
                     return@setOnLongClickListener true
 
@@ -281,7 +281,7 @@ class ChatAdapter(
                 if (task.isSuccessful) {
                     Toast.makeText(
                         holder.itemView.context,
-                        "Message deleted successfully",
+                        mContext.resources.getString(R.string.delete_message_success),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

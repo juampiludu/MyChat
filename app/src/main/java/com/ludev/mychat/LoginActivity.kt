@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         setSupportActionBar(findViewById(R.id.toolbar_login))
 
-        supportActionBar!!.title = "Login"
+        supportActionBar!!.title = resources.getString(R.string.login)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar_login.setNavigationOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
@@ -61,4 +61,11 @@ class LoginActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }

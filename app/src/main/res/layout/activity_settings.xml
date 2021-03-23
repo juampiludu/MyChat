@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorProfile"
         android:backgroundTint="@color/colorPrimary"
-        app:title="Settings"
+        app:title="@string/action_settings"
         android:padding="2dp"/>
 
     <ScrollView
@@ -243,7 +243,7 @@
                 app:cornerRadius="10dp"
                 android:height="60dp"
                 app:strokeColor="@color/colorRedLight"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile"
                 android:layout_marginTop="35dp"
                 app:icon="@drawable/ic_edit"
                 app:iconTint="@color/colorRedLight"

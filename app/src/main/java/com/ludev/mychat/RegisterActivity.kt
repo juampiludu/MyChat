@@ -22,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         setSupportActionBar(findViewById(R.id.toolbar_register))
 
-        supportActionBar!!.title = "Register"
+        supportActionBar!!.title = resources.getString(R.string.register)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar_register.setNavigationOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
@@ -89,6 +89,12 @@ class RegisterActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     @SuppressLint("DefaultLocale")

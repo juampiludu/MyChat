@@ -90,14 +90,15 @@
             android:rotation="-145"
             android:layout_marginStart="2dp"
             android:layout_centerInParent="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/attach_file" />
 
         <EditText
             android:id="@+id/text_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Message"
+            android:hint="@string/message"
             android:textColorHint="@android:color/darker_gray"
             android:textColor="@color/colorAccent"
             android:layout_toEndOf="@+id/attach_image_file_btn"
@@ -121,7 +122,7 @@
             android:layout_centerInParent="true"
             android:layout_marginEnd="2dp"
             android:visibility="gone"
-            android:contentDescription="Send message" />
+            android:contentDescription="@string/send_message" />
 
     </RelativeLayout>
 

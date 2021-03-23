@@ -1,14 +1,40 @@
 <resources>
-    <string name="app_name">MyChat</string>
+    <string name="app_name" translatable="false">MyChat</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="message">Message</string>
+    <string name="send_message">Send message</string>
+    <string name="attach_file">Attach image</string>
+    <string name="search_users">Search users…</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="profile">Profile</string>
+    <string name="phone">Phone</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+    <string name="select_image">Select Image</string>
+    <string name="sending_image">Sending image…</string>
+    <string name="save">Save</string>
+    <string name="complete_field">Complete this field.</string>
+    <string name="cancel">Cancel</string>
+    <string name="profile_updated">Profile updated successfully.</string>
+    <string name="uploading">Uploading…</string>
+    <string name="image_uploading">Image is uploading, please wait…</string>
+    <string name="not_social_media">You have not added this social media. Add it by clicking \"Edit profile\" button.</string>
+    <string name="user_not_social_media">This user has not provided this social media yet.</string>
+    <string name="delete_image">Delete image</string>
+    <string name="delete_image_msg">Are you sure to delete this image?</string>
+    <string name="delete">Delete</string>
+    <string name="delete_message">Delete message</string>
+    <string name="delete_message_msg">Are you sure to delete this message?</string>
+    <string name="clipboard">Message copied to clipboard.</string>
+    <string name="delete_message_success">Message deleted successfully</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="error_occurred">An error has occurred. Try again later.</string>
+    <string name="search">Search</string>
+    <string name="logout">Logout</string>
 </resources>

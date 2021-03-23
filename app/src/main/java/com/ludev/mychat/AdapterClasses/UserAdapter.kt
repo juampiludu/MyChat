@@ -157,7 +157,6 @@ class UserAdapter(
         lastMsgSeen = false
         var lastMsgMillis: Long = 0
         var lastMsgDate = ""
-        val calendar = Calendar.getInstance()
 
         val firebaseUsers = FirebaseAuth.getInstance().currentUser
         val ref = FirebaseGlobalValue().ref.child("Chats")
@@ -207,14 +206,13 @@ class UserAdapter(
                 // Checking last message date
 
                 val year = SimpleDateFormat("yyy", Locale.ENGLISH)
-                val month = SimpleDateFormat("yyyMM", Locale.ENGLISH)
                 val day = SimpleDateFormat("yyyMMdd", Locale.ENGLISH)
 
                 //
 
                 val currentTime = Calendar.getInstance().timeInMillis
                 val msgTime = lastMsgMillis
-                val strToDate = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+                val strToDate = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
 
                 //
 
@@ -239,7 +237,7 @@ class UserAdapter(
                     }
                     yesterday -> {
                         lastMessageTime.visibility = View.VISIBLE
-                        lastMessageTime.text = "Yesterday"
+                        lastMessageTime.text = mContext.resources.getString(R.string.yesterday)
                     }
                     sameWeek -> {
                         val format = SimpleDateFormat("EEEE", Locale.getDefault())
@@ -322,7 +320,7 @@ class UserAdapter(
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(
                     mContext,
-                    "An error has occurred. Try again later.",
+                    mContext.resources.getString(R.string.error_occurred),
                     Toast.LENGTH_SHORT
                 ).show()
                 Log.e(p0.message, p0.details)
@@ -339,12 +337,12 @@ class UserAdapter(
         return (a - 1) == b
     }
 
-    fun isDateInCurrentWeek(date: Date?): Boolean {
+    fun isDateInCurrentWeek(date: Date): Boolean {
         val currentCalendar = Calendar.getInstance()
         val week = currentCalendar[Calendar.WEEK_OF_YEAR]
         val year = currentCalendar[Calendar.YEAR]
         val targetCalendar = Calendar.getInstance()
-        targetCalendar.time = date!!
+        targetCalendar.time = date
         val targetWeek = targetCalendar[Calendar.WEEK_OF_YEAR]
         val targetYear = targetCalendar[Calendar.YEAR]
         return week == targetWeek && year == targetYear

@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.ludev.mychat.AdapterClasses.UserAdapter
-import com.ludev.mychat.ModelClasses.Chat
 import com.ludev.mychat.ModelClasses.ChatList
 import com.ludev.mychat.ModelClasses.Users
 import com.ludev.mychat.Notifications.Token
@@ -50,30 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.title = ""
 
-        val ref = FirebaseGlobalValue().ref.child("Chats")
+        val ref = FirebaseGlobalValue().ref.child("ChatList").child(firebaseUser!!.uid)
         ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                var countUnreadMessages = 0
-
-                for (dataSnapshot in p0.children) {
-                    val chat = dataSnapshot.getValue(Chat::class.java)
-                    if (chat!!.receiver == firebaseUser!!.uid && !chat.seen) {
-
-                        countUnreadMessages += 1
-
-                    }
-                }
-
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@MainActivity, "Error: ${p0.toException()}", Toast.LENGTH_LONG).show()
-                Log.e("Error MainActivity ref", p0.message)
-            }
-        })
-
-        val ref2 = FirebaseGlobalValue().ref.child("ChatList").child(firebaseUser!!.uid)
-        ref2.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(p0: DataSnapshot) {
 
                 if (p0.exists()) {
@@ -162,14 +139,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
 
         updateStatus("online")
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
 
         updateStatus("offline")
     }

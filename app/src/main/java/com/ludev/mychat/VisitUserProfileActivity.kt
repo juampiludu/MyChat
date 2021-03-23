@@ -92,7 +92,7 @@ class VisitUserProfileActivity : AppCompatActivity() {
                 socialMedia == "https://www.instagram.com/" ||
                 socialMedia == "https://www.twitter.com/"
             ) {
-                Toast.makeText(applicationContext, "This user has not provided this social media yet.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, resources.getString(R.string.user_not_social_media), Toast.LENGTH_LONG).show()
             }
             else {
 

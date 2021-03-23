@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Configuración</string>
+    <string name="username">Usuario</string>
+    <string name="name">Nombre</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="register">Registrarse</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="message">Mensaje</string>
+    <string name="send_message">Enviar mensaje</string>
+    <string name="attach_file">Adjuntar imagen</string>
+    <string name="search_users">Buscar usuarios…</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="profile">Perfil</string>
+    <string name="phone">Teléfono</string>
+    <string name="online">en línea</string>
+    <string name="offline">desconectado</string>
+    <string name="select_image">Seleccionar Imagen</string>
+    <string name="sending_image">Enviando imagen…</string>
+    <string name="save">Guardar</string>
+    <string name="complete_field">Completa este campo.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="profile_updated">Perfil actualizado exitosamente.</string>
+    <string name="uploading">Subiendo…</string>
+    <string name="image_uploading">La imagen se está subiendo, por favor espere…</string>
+    <string name="not_social_media">Todavía no has agregado esta red social, Haz click en el botón \"Editar perfil\" y agrégala.</string>
+    <string name="user_not_social_media">El usuario no ha proveído esta red social por el momento.</string>
+    <string name="delete_image">Eliminar imagen</string>
+    <string name="delete_image_msg">¿Estás seguro de eliminar esta imagen?</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_message">Eliminar mensaje</string>
+    <string name="delete_message_msg">¿Estás seguro de eliminar este mensaje?</string>
+    <string name="clipboard">Mensaje copiado al portapapeles.</string>
+    <string name="delete_message_success">Mensaje eliminado exitosamente</string>
+    <string name="yesterday">Ayer</string>
+    <string name="error_occurred">Ha ocurrido un error. Inténtalo nuevamente más tarde.</string>
+    <string name="search">Buscar</string>
+    <string name="logout">Cerrar sesión</string>
+</resources>

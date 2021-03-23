@@ -137,10 +137,10 @@ class SettingsActivity : AppCompatActivity() {
             MaterialAlertDialogBuilder(inflateView.context, R.style.AlertDialogCustom)
 
         builder.setView(inflateView)
-        builder.setPositiveButton("Save") { _, _ ->
+        builder.setPositiveButton(resources.getString(R.string.save)) { _, _ ->
 
             if (editTextUsername.text.isNullOrEmpty()) {
-                editTextUsername.error = "Complete this field"
+                editTextUsername.error = resources.getString(R.string.complete_field)
             }
             else {
                 updateProfile(
@@ -155,7 +155,7 @@ class SettingsActivity : AppCompatActivity() {
 
 
         }
-        builder.setNegativeButton("Cancel", null)
+        builder.setNegativeButton(resources.getString(R.string.cancel), null)
 
         val dialog = builder.create()
         dialog.show()
@@ -234,7 +234,7 @@ class SettingsActivity : AppCompatActivity() {
 
         usersReference!!.updateChildren(hashMap).addOnCompleteListener {
             if (it.isSuccessful) {
-                Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.profile_updated), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -255,7 +255,7 @@ class SettingsActivity : AppCompatActivity() {
         if (requestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) {
 
             imageUri = data.data
-            Toast.makeText(this, "Uploading...", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, resources.getString(R.string.uploading), Toast.LENGTH_LONG).show()
             uploadImageToDatabase()
 
         }
@@ -265,7 +265,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun uploadImageToDatabase() {
 
         val progressBar = ProgressDialog(this)
-        progressBar.setMessage("Image is uploading, please wait...")
+        progressBar.setMessage(resources.getString(R.string.image_uploading))
         progressBar.show()
 
         if (imageUri != null) {
@@ -309,7 +309,7 @@ class SettingsActivity : AppCompatActivity() {
             socialMedia == "https://www.instagram.com/" ||
             socialMedia == "https://www.twitter.com/"
         ) {
-            Toast.makeText(this, "You have not added this social media. Add it by clicking \"Edit profile\" button.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, resources.getString(R.string.not_social_media), Toast.LENGTH_LONG).show()
         }
         else {
 

@@ -78,11 +78,11 @@ class MessageChatActivity : AppCompatActivity() {
                 Picasso.get().load(user.profile).into(profile_image_mchat)
 
                 if (user.status == "online") {
-                    user_status.text = "online"
+                    user_status.text = resources.getString(R.string.online)
                     user_status.setTextColor(resources.getColor(R.color.colorRed))
                 }
                 else {
-                    user_status.text = "offline"
+                    user_status.text = resources.getString(R.string.offline)
                     user_status.setTextColor(resources.getColor(android.R.color.darker_gray))
                 }
 
@@ -134,7 +134,7 @@ class MessageChatActivity : AppCompatActivity() {
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "image/*"
-            startActivityForResult(Intent.createChooser(intent, "Select Image"), 438)
+            startActivityForResult(Intent.createChooser(intent, resources.getString(R.string.select_image)), 438)
 
         }
 
@@ -285,7 +285,7 @@ class MessageChatActivity : AppCompatActivity() {
         if (requestCode == 438 && resultCode == RESULT_OK && data != null && data.data != null) {
 
             val loadingBar = ProgressDialog(this)
-            loadingBar.setMessage("Sending image...")
+            loadingBar.setMessage(resources.getString(R.string.sending_image))
             loadingBar.show()
 
             val fileUri = data.data
