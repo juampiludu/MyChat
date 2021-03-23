@@ -170,6 +170,7 @@ class MessageChatActivity : AppCompatActivity() {
         messageHashMap["time"] = calendar.time.toString()
         messageHashMap["timeInMillis"] = System.currentTimeMillis()
         messageHashMap["showTime"] = currentTime
+        messageHashMap["category"] = 0
         reference.child("Chats")
             .child(messageKey!!)
             .setValue(messageHashMap)
@@ -325,6 +326,7 @@ class MessageChatActivity : AppCompatActivity() {
                     messageHashMap["time"] = calendar.time.toString()
                     messageHashMap["timeInMillis"] = System.currentTimeMillis()
                     messageHashMap["showTime"] = currentTime
+                    messageHashMap["category"] = 1
 
                     ref.child("Chats").child(messageId!!).setValue(messageHashMap)
                         .addOnCompleteListener { task ->

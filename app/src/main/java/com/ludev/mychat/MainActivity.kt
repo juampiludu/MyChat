@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     if (chat!!.receiver == firebaseUser!!.uid && !chat.seen) {
 
                         countUnreadMessages += 1
-                        Log.i("Chat", "${chat.sender}: $countUnreadMessages")
 
                     }
                 }
@@ -211,7 +210,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-
+                Toast.makeText(this@MainActivity, "An error has occurred. Try again later.", Toast.LENGTH_SHORT).show()
+                Log.e(p0.message, p0.details)
             }
         })
 

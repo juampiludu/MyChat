@@ -9,9 +9,10 @@ data class Chat(
     var messageId: String,
     var time: String,
     var timeInMillis: Long,
-    var showTime: String
+    var showTime: String,
+    var category: Int
 ) {
 
-    constructor() : this("", "", "", false, "", "", "", 0, "")
+    constructor() : this("", "", "", false, "", "", "", 0, "", 0)
 
 }

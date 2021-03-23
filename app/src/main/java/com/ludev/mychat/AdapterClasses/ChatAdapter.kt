@@ -59,7 +59,7 @@ class ChatAdapter(
         holder.setIsRecyclable(false)
 
         // images messages
-        if (chat.url != "" && chat.message == "sent you a photo.") {
+        if (chat.category == 1) {
 
             // image message - right side
             if (chat.sender == firebaseUser.uid) {
@@ -139,7 +139,7 @@ class ChatAdapter(
 
                 // Copy text from TextView
 
-                if (chat.url == "" && chat.message != "sent you a photo.") {
+                if (chat.category == 0) {
                     holder.itemView.item_right_ln.setOnLongClickListener {
 
                         val text = holder.show_text_message!!.text.toString()
@@ -210,7 +210,7 @@ class ChatAdapter(
         calendar.timeInMillis = mess.timeInMillis
 
         val msg = mChatList[position].timeInMillis
-        val dateFormat = SimpleDateFormat("MMMM d, yyyy").format(msg)
+        val dateFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(msg)
 
         val date = calendar.get(Calendar.DAY_OF_MONTH)
 

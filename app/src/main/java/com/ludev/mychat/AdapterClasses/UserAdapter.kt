@@ -2,11 +2,14 @@ package com.ludev.mychat.AdapterClasses
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,12 +23,14 @@ import com.ludev.mychat.R
 import com.ludev.mychat.VisitUserProfileActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UserAdapter(
     mContext: Context,
     mUsers: List<Users>,
     isChatCheck: Boolean
-    ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
+) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
 {
 
     private val mContext: Context
@@ -42,7 +47,11 @@ class UserAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, parent, false)
+        val view: View = LayoutInflater.from(mContext).inflate(
+            R.layout.user_search_item_layout,
+            parent,
+            false
+        )
         return ViewHolder(view)
     }
 
@@ -53,7 +62,13 @@ class UserAdapter(
         Picasso.get().load(user.profile).placeholder(R.drawable.profile).into(holder.profileImageView)
 
         if (isChatCheck) {
-            retrieveLastMessage(user.uid, holder.lastMessageTxt!!, holder.iconSeen!!)
+            retrieveLastMessage(
+                user.uid,
+                holder.lastMessageTxt!!,
+                holder.iconSeen!!,
+                holder.lastMessageTime!!
+            )
+            retrieveUnreadMessages(user.uid, holder.unreadMessagesRl!!, holder.unreadMessagesTxt!!)
         }
         else {
             holder.lastMessageTxt!!.text = "@" + user.username
@@ -124,14 +139,25 @@ class UserAdapter(
         var offlineIcon: CircleImageView? = itemView.findViewById(R.id.image_offline)
         var lastMessageTxt: TextView? = itemView.findViewById(R.id.message_last)
         var iconSeen: ImageView? = itemView.findViewById(R.id.icon_seen)
+        var unreadMessagesRl: RelativeLayout? = itemView.findViewById(R.id.unread_messages_rl)
+        var unreadMessagesTxt: TextView? = itemView.findViewById(R.id.unread_messages_txt)
+        var lastMessageTime: TextView? = itemView.findViewById(R.id.last_message_time)
 
     }
 
-    private fun retrieveLastMessage(chatUserId: String, lastMessageTxt: TextView, iconSeen: ImageView) {
+    private fun retrieveLastMessage(
+        chatUserId: String,
+        lastMessageTxt: TextView,
+        iconSeen: ImageView,
+        lastMessageTime: TextView
+    ) {
 
         lastMsg = "default"
         lastMsgUser = false
         lastMsgSeen = false
+        var lastMsgMillis: Long = 0
+        var lastMsgDate = ""
+        val calendar = Calendar.getInstance()
 
         val firebaseUsers = FirebaseAuth.getInstance().currentUser
         val ref = FirebaseGlobalValue().ref.child("Chats")
@@ -146,11 +172,14 @@ class UserAdapter(
                         if (chat.receiver == firebaseUsers.uid &&
                             chat.sender == chatUserId ||
                             chat.receiver == chatUserId &&
-                            chat.sender == firebaseUsers.uid) {
+                            chat.sender == firebaseUsers.uid
+                        ) {
 
                             lastMsg = chat.message
                             lastMsgUser = chat.sender == firebaseUsers.uid
                             lastMsgSeen = chat.seen
+                            lastMsgMillis = chat.timeInMillis
+                            lastMsgDate = chat.time
 
                         }
 
@@ -175,6 +204,60 @@ class UserAdapter(
                 }
                 lastMsgSeen = false
 
+                // Checking last message date
+
+                val year = SimpleDateFormat("yyy", Locale.ENGLISH)
+                val month = SimpleDateFormat("yyyMM", Locale.ENGLISH)
+                val day = SimpleDateFormat("yyyMMdd", Locale.ENGLISH)
+
+                //
+
+                val currentTime = Calendar.getInstance().timeInMillis
+                val msgTime = lastMsgMillis
+                val strToDate = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+
+                //
+
+                val y1 = year.format(currentTime)
+                val y2 = year.format(msgTime)
+
+                val w = strToDate.parse(lastMsgDate)
+
+                val d1 = day.format(currentTime)
+                val d2 = day.format(msgTime)
+
+                val sameYear = checkDate(y1, y2)
+                val sameWeek = isDateInCurrentWeek(w)
+                val sameDay = checkDate(d1, d2)
+                val yesterday = checkYesterday(d1.toInt(), d2.toInt())
+
+                when {
+                    sameDay -> {
+                        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        lastMessageTime.visibility = View.VISIBLE
+                        lastMessageTime.text = format.format(msgTime)
+                    }
+                    yesterday -> {
+                        lastMessageTime.visibility = View.VISIBLE
+                        lastMessageTime.text = "Yesterday"
+                    }
+                    sameWeek -> {
+                        val format = SimpleDateFormat("EEEE", Locale.getDefault())
+                        lastMessageTime.visibility = View.VISIBLE
+                        lastMessageTime.text = format.format(msgTime)
+                    }
+                    sameYear -> {
+                        val format = SimpleDateFormat("MMM d", Locale.getDefault())
+                        lastMessageTime.visibility = View.VISIBLE
+                        lastMessageTime.text = format.format(msgTime)
+                    }
+                    else -> {
+                        val format = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+                        lastMessageTime.visibility = View.VISIBLE
+                        lastMessageTime.text = format.format(msgTime)
+                    }
+                }
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -182,6 +265,89 @@ class UserAdapter(
             }
         })
 
+    }
+
+    private fun retrieveUnreadMessages(
+        chatUserId: String,
+        unreadMessagesRl: RelativeLayout,
+        unreadMessagesTxt: TextView
+    ) {
+
+        val ref = FirebaseGlobalValue().ref.child("Chats")
+
+        ref.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if (p0.exists()) {
+
+                    //Log.e("Count", p0.childrenCount.toString())
+                    var count = 0
+
+                    for (i in p0.children) {
+
+                        val chat = i.getValue(Chat::class.java)
+
+                        if (chat!!.sender == chatUserId) {
+                            //Log.e("Message from", chat.sender)
+
+                            if (!chat.seen) {
+                                count += 1
+                                //Log.e("${chat.sender} count", count.toString())
+                            }
+
+                            when {
+                                count > 0 -> {
+                                    unreadMessagesRl.visibility = View.VISIBLE
+                                    unreadMessagesTxt.text = count.toString()
+                                }
+                                count >= 99 -> {
+                                    unreadMessagesRl.visibility = View.VISIBLE
+                                    unreadMessagesTxt.text = "99+"
+                                }
+                                else -> {
+                                    unreadMessagesRl.visibility = View.GONE
+                                    unreadMessagesTxt.text = ""
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(
+                    mContext,
+                    "An error has occurred. Try again later.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e(p0.message, p0.details)
+            }
+        })
+
+    }
+
+    fun checkDate(a: String, b: String): Boolean {
+        return a == b
+    }
+
+    fun checkYesterday(a: Int, b: Int): Boolean {
+        return (a - 1) == b
+    }
+
+    fun isDateInCurrentWeek(date: Date?): Boolean {
+        val currentCalendar = Calendar.getInstance()
+        val week = currentCalendar[Calendar.WEEK_OF_YEAR]
+        val year = currentCalendar[Calendar.YEAR]
+        val targetCalendar = Calendar.getInstance()
+        targetCalendar.time = date!!
+        val targetWeek = targetCalendar[Calendar.WEEK_OF_YEAR]
+        val targetYear = targetCalendar[Calendar.YEAR]
+        return week == targetWeek && year == targetYear
     }
 
 }
