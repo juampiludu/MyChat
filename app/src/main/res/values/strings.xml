@@ -37,4 +37,5 @@
     <string name="error_occurred">An error has occurred. Try again later.</string>
     <string name="search">Search</string>
     <string name="logout">Logout</string>
+    <string name="logout_q">Are you sure to logout from this account?</string>
 </resources>

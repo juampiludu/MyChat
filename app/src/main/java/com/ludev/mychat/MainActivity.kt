@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.title = ""
 
         val ref = FirebaseGlobalValue().ref.child("ChatList").child(firebaseUser!!.uid)
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
 
                 if (p0.exists()) {
@@ -69,13 +69,23 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@MainActivity, "Error: ${p0.toException()}", Toast.LENGTH_LONG).show()
-                Log.e("Error MainActivity ref", p0.message)
+                Toast.makeText(this@MainActivity, "Error: ${p0.toException()}", Toast.LENGTH_LONG)
+                    .show()
+                Log.e(p0.message, p0.details)
             }
 
         })
 
-        updateToken(FirebaseInstanceId.getInstance().token)
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                Log.w("MainActivity", "getInstanceId failed", it.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new Instance ID token
+            val token: String = it.result!!.token
+            updateToken(token)
+        }
 
     }
 
@@ -94,8 +104,8 @@ class MainActivity : AppCompatActivity() {
 
                 val builder = MaterialAlertDialogBuilder(this, R.style.AlertDialogCustom)
 
-                builder.setTitle("Are you sure to logout from this account?")
-                builder.setPositiveButton("Logout") {_,_ ->
+                builder.setTitle(resources.getString(R.string.logout_q))
+                builder.setPositiveButton(resources.getString(R.string.logout)) { _, _ ->
 
                     FirebaseAuth.getInstance().signOut()
                     val intent = Intent(this, WelcomeActivity::class.java)
@@ -104,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
 
                 }
-                builder.setNegativeButton("Cancel") {_,_ ->}
+                builder.setNegativeButton(resources.getString(R.string.cancel)) { _, _ -> }
                 builder.show()
 
                 return true
@@ -162,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         mUsers = ArrayList()
 
         val ref = FirebaseGlobalValue().ref.child("Users")
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
 
                 if (p0.exists()) {
@@ -187,7 +197,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@MainActivity, "An error has occurred. Try again later.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "An error has occurred. Try again later.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.e(p0.message, p0.details)
             }
         })
