@@ -219,17 +219,22 @@ class UserAdapter(
                 val y1 = year.format(currentTime)
                 val y2 = year.format(msgTime)
 
-                val w = strToDate.parse(lastMsgDate)
+                val w: Date?
+                var sameWeek: Boolean? = null
+
+                if (lastMsgDate != "") {
+                    w = strToDate.parse(lastMsgDate)
+                    sameWeek = w?.let { isDateInCurrentWeek(it) }
+                }
 
                 val d1 = day.format(currentTime)
                 val d2 = day.format(msgTime)
 
                 val sameYear = checkDate(y1, y2)
-                val sameWeek = isDateInCurrentWeek(w)
                 val sameDay = checkDate(d1, d2)
                 val yesterday = checkYesterday(d1.toInt(), d2.toInt())
 
-                when {
+                when (sameWeek != null) {
                     sameDay -> {
                         val format = SimpleDateFormat("HH:mm", Locale.getDefault())
                         lastMessageTime.visibility = View.VISIBLE
@@ -239,7 +244,7 @@ class UserAdapter(
                         lastMessageTime.visibility = View.VISIBLE
                         lastMessageTime.text = mContext.resources.getString(R.string.yesterday)
                     }
-                    sameWeek -> {
+                    sameWeek!!-> {
                         val format = SimpleDateFormat("EEEE", Locale.getDefault())
                         lastMessageTime.visibility = View.VISIBLE
                         lastMessageTime.text = format.format(msgTime)
@@ -250,7 +255,12 @@ class UserAdapter(
                         lastMessageTime.text = format.format(msgTime)
                     }
                     else -> {
-                        val format = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+                        val format = if (mContext.resources.configuration.locale == Locale.ENGLISH) {
+                            SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH)
+                        }
+                        else {
+                            SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+                        }
                         lastMessageTime.visibility = View.VISIBLE
                         lastMessageTime.text = format.format(msgTime)
                     }
@@ -299,9 +309,9 @@ class UserAdapter(
                                     unreadMessagesRl.visibility = View.VISIBLE
                                     unreadMessagesTxt.text = count.toString()
                                 }
-                                count >= 99 -> {
+                                count >= 1000 -> {
                                     unreadMessagesRl.visibility = View.VISIBLE
-                                    unreadMessagesTxt.text = "99+"
+                                    unreadMessagesTxt.text = "999+"
                                 }
                                 else -> {
                                     unreadMessagesRl.visibility = View.GONE

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,6 +23,7 @@ class SearchActivity : AppCompatActivity() {
     private var mUsers: List<Users>? = null
     private var recyclerView: RecyclerView? = null
     private var searchUsersEditText: EditText? = null
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,8 @@ class SearchActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.search_toolbar))
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
         recyclerView = findViewById(R.id.search_list)
         recyclerView!!.setHasFixedSize(true)
@@ -101,6 +105,18 @@ class SearchActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        MainActivity().updateStatus("online", firebaseUser!!.uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        MainActivity().updateStatus("offline", firebaseUser!!.uid)
     }
 
 }

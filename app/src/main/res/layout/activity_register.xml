@@ -33,6 +33,7 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_register_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
@@ -42,7 +43,8 @@
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_person"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_register"
@@ -55,6 +57,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_register_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -65,7 +68,8 @@
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_person_outline"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_register"
@@ -73,11 +77,12 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/white"
                 android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
-                android:inputType="text"/>
+                android:inputType="textCapWords"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_register_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -88,7 +93,8 @@
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_email"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_register"
@@ -101,6 +107,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_register_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
@@ -111,7 +118,9 @@
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_password"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:endIconMode="password_toggle"
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_register"
@@ -123,17 +132,57 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/register_btn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/repeat_password_register_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="25dp"
-            android:text="@string/register"
-            android:textColor="@color/colorRedLight"
-            app:strokeColor="@color/colorRedLight"
-            app:rippleColor="@color/colorRippleButtons"
-            />
+            android:layout_height="wrap_content"
+            android:hint="@string/repeat_password"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray"
+            app:hintTextColor="@android:color/darker_gray"
+            app:hintAnimationEnabled="true"
+            android:background="@color/colorPrimary"
+            app:startIconDrawable="@drawable/ic_password"
+            app:startIconTint="@color/colorAccent"
+            app:endIconMode="password_toggle"
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repeat_password_register"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/register_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/register"
+                android:textColor="@color/colorRedLight"
+                app:strokeColor="@color/colorRedLight"
+                app:rippleColor="@color/colorRippleButtons"
+                />
+
+            <ProgressBar
+                android:id="@+id/register_progress_bar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 

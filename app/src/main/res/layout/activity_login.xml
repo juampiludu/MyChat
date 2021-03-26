@@ -33,6 +33,7 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_login_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -43,7 +44,8 @@
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_email"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_login"
@@ -56,6 +58,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_login_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
@@ -64,8 +67,10 @@
             app:hintTextColor="@android:color/darker_gray"
             android:background="@color/colorPrimary"
             app:startIconDrawable="@drawable/ic_password"
+            app:endIconMode="password_toggle"
             app:startIconTint="@color/colorAccent"
-            app:boxStrokeColor="?attr/colorAccent">
+            app:boxStrokeColor="?attr/colorAccent"
+            android:backgroundTint="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_login"
@@ -77,17 +82,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_btn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="25dp"
-            android:text="@string/login"
-            android:textColor="@color/colorRedLight"
-            app:strokeColor="@color/colorRedLight"
-            app:rippleColor="@color/colorRippleButtons"
-            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_btn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/login"
+                android:textColor="@color/colorRedLight"
+                app:strokeColor="@color/colorRedLight"
+                app:rippleColor="@color/colorRippleButtons"
+                />
+
+            <ProgressBar
+                android:id="@+id/login_progress_bar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 

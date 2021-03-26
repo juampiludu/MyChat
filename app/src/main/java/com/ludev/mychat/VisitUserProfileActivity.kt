@@ -12,6 +12,8 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -23,6 +25,7 @@ class VisitUserProfileActivity : AppCompatActivity() {
 
     private var userVisitId: String = ""
     var user: Users? = null
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,8 @@ class VisitUserProfileActivity : AppCompatActivity() {
         }
 
         userVisitId = intent.getStringExtra("visit_id")
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val ref = FirebaseGlobalValue().ref.child("Users").child(userVisitId)
         ref.addValueEventListener(object : ValueEventListener{
@@ -105,6 +110,18 @@ class VisitUserProfileActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        MainActivity().updateStatus("online", firebaseUser!!.uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        MainActivity().updateStatus("offline", firebaseUser!!.uid)
     }
 
 }

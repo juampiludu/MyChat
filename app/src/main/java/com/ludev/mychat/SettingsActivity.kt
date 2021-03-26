@@ -327,6 +327,18 @@ class SettingsActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        MainActivity().updateStatus("online", firebaseUser!!.uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        MainActivity().updateStatus("offline", firebaseUser!!.uid)
+    }
+
     @SuppressLint("DefaultLocale")
     private fun String.capitalizeWords(): String =
         split(" ").joinToString(" ") { it.toLowerCase().capitalize() }

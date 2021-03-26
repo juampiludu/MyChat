@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,6 +23,7 @@ class ViewFullImageActivity : AppCompatActivity() {
     private var imageViewer: ImageView? = null
     private var imageUrl: String = ""
     private var userId: String = ""
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,8 @@ class ViewFullImageActivity : AppCompatActivity() {
                 setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             }
         }
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
         imageUrl = intent.getStringExtra("url")
         userId = intent.getStringExtra("user_id")
@@ -88,4 +92,17 @@ class ViewFullImageActivity : AppCompatActivity() {
         })
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        MainActivity().updateStatus("online", firebaseUser!!.uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        MainActivity().updateStatus("offline", firebaseUser!!.uid)
+    }
+
 }

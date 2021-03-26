@@ -149,6 +149,12 @@ class MessageChatActivity : AppCompatActivity() {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
         }
 
+        chat_user_info.setOnClickListener {
+            val intent = Intent(this, VisitUserProfileActivity::class.java)
+            intent.putExtra("visit_id", userIdVisit)
+            startActivity(intent)
+        }
+
     }
 
     private fun sendMessageToUser(senderId: String, receiverId: String?, message: String) {
@@ -196,6 +202,12 @@ class MessageChatActivity : AppCompatActivity() {
                                 .child(firebaseUser!!.uid)
                             chatsListReceiverReference.child("id").setValue(firebaseUser!!.uid)
 
+                            FirebaseGlobalValue().ref
+                                .child("Users")
+                                .child(firebaseUser!!.uid)
+                                .child("lastMessageTime")
+                                .setValue(System.currentTimeMillis())
+
                         }
 
                         override fun onCancelled(p0: DatabaseError) {
@@ -242,7 +254,7 @@ class MessageChatActivity : AppCompatActivity() {
                 for (dataSnapshot in p0.children) {
                     val token: Token? = dataSnapshot.getValue(Token::class.java)
 
-                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_launcher, message, name, userIdVisit)
+                    val data = Data(firebaseUser!!.uid, R.mipmap.ic_app_logo, message, name, userIdVisit)
 
                     val sender = Sender(data, token!!.token)
 
@@ -329,7 +341,7 @@ class MessageChatActivity : AppCompatActivity() {
                     messageHashMap["category"] = 1
 
                     ref.child("Chats").child(messageId!!).setValue(messageHashMap)
-                        .addOnCompleteListener { task ->
+                        .addOnCompleteListener {
                             if (task.isSuccessful) {
 
                                 loadingBar.dismiss()
@@ -353,6 +365,13 @@ class MessageChatActivity : AppCompatActivity() {
 
                                     }
                                 })
+
+                                FirebaseGlobalValue().ref
+                                    .child("Users")
+                                    .child(firebaseUser!!.uid)
+                                    .child("lastMessageTime")
+                                    .setValue(System.currentTimeMillis())
+
                             }
                         }
 
@@ -425,9 +444,16 @@ class MessageChatActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        MainActivity().updateStatus("online", firebaseUser!!.uid)
+    }
+
     override fun onPause() {
         super.onPause()
 
+        MainActivity().updateStatus("offline", firebaseUser!!.uid)
         reference!!.removeEventListener(seenListener!!)
 
     }

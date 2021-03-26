@@ -12,9 +12,10 @@ data class Users(
     var instagram: String,
     var twitter: String,
     var name: String,
+    var lastMessageTime: Long
     ) {
 
-    constructor() : this("", "", "", "", "", "", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", "", "", "", "", "", 0)
 
 }
 

@@ -139,9 +139,9 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun updateStatus(status: String) {
+    fun updateStatus(status: String, userId: String) {
 
-        val ref = FirebaseGlobalValue().ref.child("Users").child(firebaseUser!!.uid)
+        val ref = FirebaseGlobalValue().ref.child("Users").child(userId)
 
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status
@@ -149,16 +149,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
 
-        updateStatus("online")
+        updateStatus("online", firebaseUser!!.uid)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
 
-        updateStatus("offline")
+        updateStatus("offline", firebaseUser!!.uid)
     }
 
     private fun updateToken(token: String?) {
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity() {
 
         mUsers = ArrayList()
 
-        val ref = FirebaseGlobalValue().ref.child("Users")
+        val ref = FirebaseGlobalValue().ref.child("Users").orderByChild("-lastMessageTime")
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
 

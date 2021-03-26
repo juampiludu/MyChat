@@ -66,13 +66,18 @@ class MyFirebaseMessaging : FirebaseMessagingService() {
 
         val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val builder: NotificationCompat.Builder =  NotificationCompat.Builder(this)
-            .setContentIntent(pendingIntent)
-            .setContentTitle(title)
-            .setContentText(body)
+        val inboxStyle: NotificationCompat.InboxStyle =  NotificationCompat.InboxStyle()
+
+        inboxStyle.setBigContentTitle(title)
+        inboxStyle.addLine(body)
+
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
             .setSmallIcon(icon!!.toInt())
+            .setContentTitle(title)
+            .setContentText("body")
             .setSound(defaultSound)
             .setAutoCancel(true)
+            .setStyle(inboxStyle)
 
         val noti = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
