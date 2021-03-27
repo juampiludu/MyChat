@@ -39,4 +39,8 @@
     <string name="logout">Cerrar sesión</string>
     <string name="logout_q">¿Estás seguro que quieres cerrar sesión?</string>
     <string name="repeat_password">Repetir contraseña</string>
+    <string name="copy">Copiar</string>
+    <string name="invalid_email">Este campo está vacio o el correo electrónico no es valido.</string>
+    <string name="empty_field">Completa este campo.</string>
+    <string name="pass_not_match">Las contraseñas no coinciden</string>
 </resources>

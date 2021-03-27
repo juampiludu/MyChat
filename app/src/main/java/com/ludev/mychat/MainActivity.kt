@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(
                     this@MainActivity,
-                    "An error has occurred. Try again later.",
+                    getString(R.string.error_occurred),
                     Toast.LENGTH_SHORT
                 ).show()
                 Log.e(p0.message, p0.details)

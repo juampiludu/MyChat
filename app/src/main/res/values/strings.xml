@@ -39,4 +39,8 @@
     <string name="logout">Logout</string>
     <string name="logout_q">Are you sure to logout from this account?</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="copy">Copy</string>
+    <string name="invalid_email">This field is empty or email is invalid.</string>
+    <string name="empty_field">Complete this field.</string>
+    <string name="pass_not_match">Passwords do not match</string>
 </resources>

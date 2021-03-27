@@ -104,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
         if (username.isEmpty()) {
 
             usernameLayout.isErrorEnabled = true
-            usernameLayout.error = "Complete this field"
+            usernameLayout.error = getString(R.string.empty_field)
             usernameInput.requestFocus()
             return false
 
@@ -127,7 +127,7 @@ class RegisterActivity : AppCompatActivity() {
         if (name.isEmpty()) {
 
             nameLayout.isErrorEnabled = true
-            nameLayout.error = "Complete this field"
+            nameLayout.error = getString(R.string.empty_field)
             nameInput.requestFocus()
             return false
 
@@ -150,7 +150,7 @@ class RegisterActivity : AppCompatActivity() {
         if (email.isEmpty() || !isValidEmail(email)) {
 
             emailLayout.isErrorEnabled = true
-            emailLayout.error = "This field is empty or email is invalid."
+            emailLayout.error = getString(R.string.invalid_email)
             emailInput.requestFocus()
             return false
 
@@ -184,7 +184,7 @@ class RegisterActivity : AppCompatActivity() {
             password2 != password -> {
 
                 passwordLayout2.isErrorEnabled = true
-                passwordLayout2.error = "Passwords do not match"
+                passwordLayout2.error = getString(R.string.pass_not_match)
                 passwordInput2.requestFocus()
                 return false
 
@@ -192,7 +192,7 @@ class RegisterActivity : AppCompatActivity() {
             password.isEmpty() -> {
 
                 passwordLayout.isErrorEnabled = true
-                passwordLayout.error = "Complete this field"
+                passwordLayout.error = getString(R.string.empty_field)
                 passwordInput.requestFocus()
                 return false
 
@@ -200,7 +200,7 @@ class RegisterActivity : AppCompatActivity() {
             password2.isEmpty() -> {
 
                 passwordLayout2.isErrorEnabled = true
-                passwordLayout2.error = "Complete this field"
+                passwordLayout2.error = getString(R.string.empty_field)
                 passwordInput2.requestFocus()
                 return false
 

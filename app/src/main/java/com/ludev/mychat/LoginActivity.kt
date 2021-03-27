@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         if (email.isEmpty() || !isValidEmail(email)) {
 
             emailLayout.isErrorEnabled = true
-            emailLayout.error = "This field is empty or email is invalid."
+            emailLayout.error = getString(R.string.invalid_email)
             emailInput.requestFocus()
             return false
 
@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
         if (password.isEmpty()) {
 
             passwordLayout.isErrorEnabled = true
-            passwordLayout.error = "Complete this field."
+            passwordLayout.error = getString(R.string.empty_field)
             passwordInput.requestFocus()
             return false
 
