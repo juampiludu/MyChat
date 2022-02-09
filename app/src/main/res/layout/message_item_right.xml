@@ -50,7 +50,7 @@
                 android:src="@drawable/profile"
                 android:visibility="gone"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/item_right_ln"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,46 +58,59 @@
                 android:padding="5dp"
                 android:background="@drawable/background_right">
 
-                <TextView
-                    android:id="@+id/show_text_message"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="18sp"
-                    android:layout_marginEnd="5dp"
-                    android:textColor="@android:color/white"
-                    android:autoLink="all"
-                    android:textColorHighlight="#99CD9494"
-                    android:textColorLink="#CD9494"
-                    android:linksClickable="true"
-                    android:visibility="visible"/>
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/right_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="400dp"
-                    android:background="@drawable/background_image_right"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/show_text_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18sp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@android:color/white"
+                        android:autoLink="all"
+                        android:textColorHighlight="#99CD9494"
+                        android:textColorLink="#CD9494"
+                        android:linksClickable="true"
+                        android:visibility="visible"/>
 
-                <TextView
-                    android:id="@+id/text_show_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="21:10"
-                    android:textSize="12sp"
-                    android:layout_marginEnd="5dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_gravity="bottom"/>
+                    <ImageView
+                        android:id="@+id/right_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="400dp"
+                        android:background="@drawable/background_image_right"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/icon_seen"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_sent"
-                    android:layout_gravity="bottom"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="end">
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_show_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="21:10"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@android:color/darker_gray"/>
+
+                        <ImageView
+                            android:id="@+id/icon_seen"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_sent"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

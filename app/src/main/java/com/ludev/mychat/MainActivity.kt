@@ -16,7 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ludev.mychat.AdapterClasses.UserAdapter
 import com.ludev.mychat.ModelClasses.ChatList
 import com.ludev.mychat.ModelClasses.Users
@@ -76,14 +76,14 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (!it.isSuccessful) {
                 Log.w("MainActivity", "getInstanceId failed", it.exception)
                 return@addOnCompleteListener
             }
 
             // Get new Instance ID token
-            val token: String = it.result!!.token
+            val token: String = it.result!!
             updateToken(token)
         }
 

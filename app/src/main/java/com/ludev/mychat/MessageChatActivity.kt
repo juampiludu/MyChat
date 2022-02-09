@@ -57,7 +57,7 @@ class MessageChatActivity : AppCompatActivity() {
         apiService = Client.Client.getClient("https://fcm.googleapis.com/")!!.create(ApiService::class.java)
 
         intent = intent
-        userIdVisit = intent.getStringExtra("visit_id")
+        userIdVisit = intent.getStringExtra("visit_id").toString()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         recyclerViewChats = findViewById(R.id.recycler_view_chats)

@@ -22,7 +22,8 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/chat_user_info"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
@@ -33,15 +34,11 @@
                     android:src="@drawable/profile"/>
 
                 <RelativeLayout
-                    android:id="@+id/chat_user_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:layout_toEndOf="@id/profile_image_mchat"
                     android:layout_marginStart="12dp"
-                    android:paddingEnd="60dp"
-                    android:foreground="@drawable/cv_user_search_ripple">
+                    android:paddingEnd="60dp">
 
                     <TextView
                         android:id="@+id/username_mchat"

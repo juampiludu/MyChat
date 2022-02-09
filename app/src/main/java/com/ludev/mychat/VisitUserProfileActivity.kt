@@ -43,7 +43,7 @@ class VisitUserProfileActivity : AppCompatActivity() {
             }
         }
 
-        userVisitId = intent.getStringExtra("visit_id")
+        userVisitId = intent.getStringExtra("visit_id").toString()
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 

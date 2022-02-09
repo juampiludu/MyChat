@@ -13,11 +13,12 @@
         android:roundIcon="@mipmap/ic_app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".VisitUserProfileActivity" />
         <activity android:name=".ViewFullImageActivity" />
         <activity android:name=".MessageChatActivity" />
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +44,7 @@
         <service
             android:name=".Notifications.MyFirebaseInstanceId"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

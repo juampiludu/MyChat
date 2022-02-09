@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -302,16 +303,19 @@ class ChatAdapter(
         val msg = mChatList[position].timeInMillis
         val dateFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(msg)
 
-        val date = calendar.get(Calendar.DAY_OF_MONTH)
+        val date = calendar.timeInMillis
+        val dateYear = calendar.get(Calendar.DAY_OF_YEAR)
+        Log.d("Date", "$date")
 
         if (position > 0) {
 
             val previousMessage = mChatList[position - 1]
 
             calendar.timeInMillis = previousMessage.timeInMillis
-            val prevDate = calendar.get(Calendar.DAY_OF_MONTH)
+            val prevDate = calendar.timeInMillis
+            val prevDateYear = calendar.get(Calendar.DAY_OF_YEAR)
 
-            if (date > prevDate) {
+            if (date > prevDate && dateYear != prevDateYear) {
                 // This is a different day than the previous message, so show the Date
                 holder.itemView.show_date_rl!!.visibility = View.VISIBLE
                 holder.show_date!!.text = dateFormat

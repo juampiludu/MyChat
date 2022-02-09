@@ -43,8 +43,8 @@ class ViewFullImageActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        imageUrl = intent.getStringExtra("url")
-        userId = intent.getStringExtra("user_id")
+        imageUrl = intent.getStringExtra("url").toString()
+        userId = intent.getStringExtra("user_id").toString()
         imageViewer = findViewById(R.id.image_viewer)
 
         Picasso.get().load(imageUrl).into(imageViewer)

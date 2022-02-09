@@ -33,6 +33,12 @@ class LoginActivity : AppCompatActivity() {
             loginUser()
         }
 
+        forgot_pass_text_view.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     private fun loginUser() {
